@@ -1,19 +1,25 @@
 /* Display Area Styles */
 /* Requirements: 5.1, 5.2, 5.3, 5.4, 5.5 */
+/* Task 20: Enhanced visual polish */
 
 .display-area {
-    /* Dark semi-transparent background - Requirement 5.5 */
-    background: rgba(0, 0, 0, 0.2);
+    /* Dark semi-transparent background - Requirement 5.5, Task 20: Enhanced depth */
+    background: rgba(0, 0, 0, 0.25);
     border-radius: var(--radius-lg);
     
-    /* Proper padding and spacing - Requirement 5.3 */
+    /* Task 20: Subtle inner shadow for depth */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) inset,
+                0 1px 0 rgba(255, 255, 255, 0.05);
+    
+    /* Proper padding and spacing - Requirement 5.3, Task 20: Consistent spacing */
     padding: var(--space-6);
     margin-bottom: var(--space-6);
     
-    /* Smooth transitions for state changes */
-    transition: background var(--duration-normal) var(--easing-standard),
-                border var(--duration-normal) var(--easing-standard),
-                transform var(--duration-normal) var(--easing-standard);
+    /* Smooth transitions for state changes - Task 20: Refined easing */
+    transition: background var(--duration-normal) var(--easing-smooth),
+                border var(--duration-normal) var(--easing-smooth),
+                box-shadow var(--duration-normal) var(--easing-smooth),
+                transform var(--duration-normal) var(--easing-smooth);
     
     /* Performance optimization - Task 17: Requirements 2.5
        will-change for error shake animation */

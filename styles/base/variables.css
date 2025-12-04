@@ -3,14 +3,15 @@
 :root {
     /* ========================================
        COLOR PALETTE
+       Task 20: Fine-tuned for optimal aesthetics
        ======================================== */
     
-    /* Primary Colors */
-    --color-primary: #667eea;
-    --color-primary-light: #7c3aed;
-    --color-primary-dark: #5b21b6;
+    /* Primary Colors - Enhanced purple tones for better visual appeal */
+    --color-primary: #6366f1;        /* Refined indigo for modern look */
+    --color-primary-light: #818cf8;  /* Lighter shade for highlights */
+    --color-primary-dark: #4f46e5;   /* Deeper shade for depth */
     
-    /* Secondary Colors */
+    /* Secondary Colors - Warmer amber tones */
     --color-secondary: #f59e0b;
     --color-secondary-light: #fbbf24;
     --color-secondary-dark: #d97706;
@@ -23,16 +24,16 @@
     --color-text-secondary: #cbd5e1;
     --color-text-tertiary: #94a3b8;
     
-    /* Button Colors */
-    --color-number: #1e293b;
-    --color-operator: #5b21b6;      /* Darker purple for better contrast */
-    --color-function: #6d28d9;      /* Darker violet for better contrast */
-    --color-control: #dc2626;       /* Darker red for better contrast */
-    --color-equals: #047857;        /* Darker green for better contrast */
-    --color-memory: #f59e0b;
+    /* Button Colors - Task 20: Refined for visual distinction and harmony */
+    --color-number: #1e293b;        /* Slate gray for numbers */
+    --color-operator: #4f46e5;      /* Refined indigo for operators */
+    --color-function: #7c3aed;      /* Vibrant purple for functions */
+    --color-control: #dc2626;       /* Red for control actions */
+    --color-equals: #059669;        /* Emerald green for equals */
+    --color-memory: #f59e0b;        /* Amber for memory */
     
-    /* Gradient Colors */
-    --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* Gradient Colors - Task 20: Enhanced for smoother transitions */
+    --gradient-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
     --gradient-alt: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     
     /* Semantic Colors */
@@ -41,10 +42,10 @@
     --color-success: #10b981;
     --color-warning: #f59e0b;
     
-    /* Glass-morphism */
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-blur: 10px;
+    /* Glass-morphism - Task 20: Enhanced for better depth */
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-blur: 16px;
     
     /* ========================================
        TYPOGRAPHY
@@ -99,13 +100,13 @@
     --radius-xl: 24px;
     
     /* ========================================
-       SHADOWS
+       SHADOWS - Task 20: Refined depths for better elevation
        ======================================== */
     
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.2);
-    --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15), 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.15);
     
     /* ========================================
        ANIMATION TIMINGS
@@ -121,11 +122,12 @@
     --duration-slow: 300ms;
     --duration-entrance: 600ms;
     
-    /* Easing Functions */
-    --easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
-    --easing-decelerate: cubic-bezier(0.0, 0.0, 0.2, 1);
-    --easing-accelerate: cubic-bezier(0.4, 0.0, 1, 1);
-    --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Easing Functions - Task 20: Refined for natural feel */
+    --easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1);      /* Material Design standard */
+    --easing-decelerate: cubic-bezier(0.0, 0.0, 0.2, 1);    /* Smooth deceleration */
+    --easing-accelerate: cubic-bezier(0.4, 0.0, 1, 1);      /* Quick acceleration */
+    --easing-smooth: cubic-bezier(0.4, 0.0, 0.6, 1);        /* Smoother transitions */
+    --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Playful bounce */
     
     /* ========================================
        Z-INDEX SCALE

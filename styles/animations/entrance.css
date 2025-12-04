@@ -10,11 +10,15 @@
    - Duration: 600ms with decelerate easing
    - Calculator remains interactive during animation
    Task 17: Uses transform and opacity for GPU acceleration
+   Task 20: Refined for smoother entrance
 */
 @keyframes fadeInScale {
     0% {
         opacity: 0;
-        transform: scale(0.9) translateY(20px);
+        transform: scale(0.92) translateY(30px);
+    }
+    60% {
+        opacity: 1;
     }
     100% {
         opacity: 1;
@@ -29,14 +33,15 @@
    - Applied with staggered delays (30ms per button)
    - Total stagger time fits within 800ms
    Task 17: Uses transform and opacity for GPU acceleration
+   Task 20: Refined for more elegant entrance
 */
 @keyframes buttonStagger {
     0% {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(12px) scale(0.95);
     }
     100% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }

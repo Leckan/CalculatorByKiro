@@ -2,12 +2,13 @@
 /* Task 11: Requirements 6.1, 6.2, 6.3, 6.4 */
 
 /* Base indicator transitions - Requirement 6.4 */
+/* Task 20: Refined for smoother feel */
 .indicator {
-    /* Smooth transitions for all state changes - 250ms duration */
-    transition: transform var(--duration-normal) var(--easing-standard),
-                opacity var(--duration-normal) var(--easing-standard),
-                background var(--duration-normal) var(--easing-standard),
-                box-shadow var(--duration-normal) var(--easing-standard);
+    /* Smooth transitions for all state changes - 250ms duration, Task 20: Enhanced easing */
+    transition: transform var(--duration-normal) var(--easing-smooth),
+                opacity var(--duration-normal) var(--easing-smooth),
+                background var(--duration-normal) var(--easing-smooth),
+                box-shadow var(--duration-normal) var(--easing-smooth);
     
     /* Performance optimization - Task 17: Requirements 2.5
        will-change for indicator animations */
@@ -23,12 +24,12 @@
     /* Scale effect for active state */
     transform: scale(1.05);
     
-    /* Glow effect using box-shadow */
-    box-shadow: 0 0 12px rgba(102, 126, 234, 0.5),
-                0 0 24px rgba(102, 126, 234, 0.3);
+    /* Glow effect using box-shadow - Task 20: Enhanced with refined colors */
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.6),
+                0 0 24px rgba(99, 102, 241, 0.3);
     
-    /* Enhanced background for active state */
-    background: rgba(102, 126, 234, 0.3);
+    /* Enhanced background for active state - Task 20: Refined color */
+    background: rgba(99, 102, 241, 0.3);
 }
 
 /* Memory indicator with pulse animation - Requirement 6.2 */
@@ -37,15 +38,16 @@
 }
 
 /* Pulse animation for memory indicator when active
-   Task 17: Uses transform and opacity for GPU acceleration */
+   Task 17: Uses transform and opacity for GPU acceleration
+   Task 20: Refined for more natural feel */
 @keyframes indicatorPulse {
     0%, 100% {
         opacity: 1;
         transform: scale(1);
     }
     50% {
-        opacity: 0.6;
-        transform: scale(1.05);
+        opacity: 0.7;
+        transform: scale(1.08);
     }
 }
 

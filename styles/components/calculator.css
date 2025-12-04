@@ -2,6 +2,7 @@
    CALCULATOR CONTAINER
    Glass-morphism Effect
    Requirements: 8.1, 8.2, 8.3, 8.4, 8.5
+   Task 20: Enhanced visual polish
    ======================================== */
 
 .calculator {
@@ -13,13 +14,14 @@
     /* Rounded corners */
     border-radius: var(--radius-xl); /* 24px */
     
-    /* Subtle border with semi-transparent white */
+    /* Subtle border with semi-transparent white - Task 20: Enhanced */
     border: 1px solid var(--glass-border);
     
-    /* Soft shadow for elevation */
-    box-shadow: var(--shadow-xl);
+    /* Soft shadow for elevation - Task 20: Refined depth */
+    box-shadow: var(--shadow-xl),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
     
-    /* Layout and spacing */
+    /* Layout and spacing - Task 20: Consistent spacing */
     max-width: 420px;
     width: 100%;
     padding: var(--space-6);
@@ -27,11 +29,11 @@
     /* Ensure content is positioned correctly */
     position: relative;
     
-    /* Smooth transitions for any state changes */
-    transition: border-color var(--duration-normal) var(--easing-standard),
-                box-shadow var(--duration-normal) var(--easing-standard),
-                transform var(--duration-normal) var(--easing-standard),
-                opacity var(--duration-normal) var(--easing-standard);
+    /* Smooth transitions for any state changes - Task 20: Refined easing */
+    transition: border-color var(--duration-normal) var(--easing-smooth),
+                box-shadow var(--duration-normal) var(--easing-smooth),
+                transform var(--duration-normal) var(--easing-smooth),
+                opacity var(--duration-normal) var(--easing-smooth);
     
     /* Performance optimization - Task 17: Requirements 2.5
        will-change for entrance animation */
@@ -95,8 +97,10 @@
 /* Desktop viewport centering - handled in main.css body styles */
 /* The calculator is already centered via flexbox on the body element */
 
-/* Hover effect for subtle interactivity (optional enhancement) */
+/* Hover effect for subtle interactivity - Task 20: Enhanced */
 .calculator:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-xl),
+                0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+                0 0 40px rgba(99, 102, 241, 0.15);
 }
