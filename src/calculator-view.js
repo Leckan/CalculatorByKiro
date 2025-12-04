@@ -102,7 +102,7 @@ class CalculatorView {
 
         // Button layout definition - optimized for usability and ergonomics
         // Follows standard calculator conventions with logical grouping
-        // 8-column grid: 4 scientific functions + 4 number pad/operators
+        // 8-column grid: 4 scientific functions + 3 number pad + 1 operator column
         const buttonLayout = [
             // Row 1: Memory and clear functions (grouped by function)
             [
@@ -115,7 +115,7 @@ class CalculatorView {
                 { text: '⌫', type: 'control', action: 'backspace' },
                 { text: '÷', type: 'operator', action: '/' }
             ],
-            // Row 2: Trigonometric functions + parentheses + number pad row 1 (7,8,9)
+            // Row 2: Trigonometric functions + parentheses + number pad row 1 (7,8,9) + multiply
             [
                 { text: 'sin', type: 'function', action: 'sin' },
                 { text: 'cos', type: 'function', action: 'cos' },
@@ -124,9 +124,10 @@ class CalculatorView {
                 { text: '(', type: 'control', action: 'open-paren' },
                 { text: '7', type: 'number', action: '7' },
                 { text: '8', type: 'number', action: '8' },
-                { text: '9', type: 'number', action: '9' }
+                { text: '9', type: 'number', action: '9' },
+                { text: '×', type: 'operator', action: '*' }
             ],
-            // Row 3: Logarithmic/exponential functions + number pad row 2 (4,5,6) + multiply
+            // Row 3: Logarithmic/exponential functions + number pad row 2 (4,5,6) + subtract
             [
                 { text: 'ln', type: 'function', action: 'ln' },
                 { text: 'log', type: 'function', action: 'log' },
@@ -135,39 +136,31 @@ class CalculatorView {
                 { text: ')', type: 'control', action: 'close-paren' },
                 { text: '4', type: 'number', action: '4' },
                 { text: '5', type: 'number', action: '5' },
-                { text: '6', type: 'number', action: '6' }
+                { text: '6', type: 'number', action: '6' },
+                { text: '-', type: 'operator', action: '-' }
             ],
-            // Row 4: Root, power, factorial + number pad row 3 (1,2,3) + subtract
+            // Row 4: Root, power, factorial + number pad row 3 (1,2,3) + add
             [
                 { text: '√', type: 'function', action: 'sqrt' },
                 { text: '^', type: 'operator', action: '^' },
                 { text: '!', type: 'function', action: 'factorial' },
                 { text: 'exp', type: 'function', action: 'exp' },
-                { text: '×', type: 'operator', action: '*' },
+                { text: '', type: 'empty', action: '' },
                 { text: '1', type: 'number', action: '1' },
                 { text: '2', type: 'number', action: '2' },
-                { text: '3', type: 'number', action: '3' }
+                { text: '3', type: 'number', action: '3' },
+                { text: '+', type: 'operator', action: '+' }
             ],
-            // Row 5: Bottom row with 0 (spanning 2), decimal, negate + subtract
+            // Row 5: Bottom row with 0 (spanning 2), decimal, negate + equals
             [
                 { text: '', type: 'empty', action: '' },
                 { text: '', type: 'empty', action: '' },
                 { text: '', type: 'empty', action: '' },
                 { text: '', type: 'empty', action: '' },
-                { text: '-', type: 'operator', action: '-' },
+                { text: '', type: 'empty', action: '' },
                 { text: '0', type: 'number', action: '0', className: 'zero-button' },
                 { text: '.', type: 'control', action: 'decimal' },
-                { text: '±', type: 'control', action: 'negate' }
-            ],
-            // Row 6: Equals and add at bottom right
-            [
-                { text: '', type: 'empty', action: '' },
-                { text: '', type: 'empty', action: '' },
-                { text: '', type: 'empty', action: '' },
-                { text: '', type: 'empty', action: '' },
-                { text: '', type: 'empty', action: '' },
-                { text: '', type: 'empty', action: '' },
-                { text: '+', type: 'operator', action: '+' },
+                { text: '±', type: 'control', action: 'negate' },
                 { text: '=', type: 'control', action: 'equals', className: 'equals-button' }
             ]
         ];

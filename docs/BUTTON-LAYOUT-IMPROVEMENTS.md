@@ -22,15 +22,16 @@ The calculator button layout has been reorganized for better usability, ergonomi
 
 ## New Improved Layout
 
-### Layout Structure (8 columns)
+### Layout Structure (9 columns)
 ```
 Row 1: [MC] [MR] [M+] [MS] [AC] [C ] [⌫ ] [÷ ]
-Row 2: [sin][cos][tan][D/R][(  ][7  ][8  ][9  ]
-Row 3: [ln ][log][e  ][π  ][)  ][4  ][5  ][6  ]
-Row 4: [√  ][^  ][! ][exp][×  ][1  ][2  ][3  ]
-Row 5: [   ][   ][   ][   ][-  ][0  0][.  ][± ]
-Row 6: [   ][   ][   ][   ][   ][   ][+  ][=  ]
+Row 2: [sin][cos][tan][D/R][(  ][7  ][8  ][9  ][× ]
+Row 3: [ln ][log][e  ][π  ][)  ][4  ][5  ][6  ][- ]
+Row 4: [√  ][^  ][! ][exp][   ][1  ][2  ][3  ][+ ]
+Row 5: [   ][   ][   ][   ][   ][0  0][.  ][± ][= ]
 ```
+
+**Perfect Operator Column**: All four basic operators (÷, ×, -, +) and equals (=) form a clean vertical column on the right side, exactly like a standard calculator!
 
 ### Key Improvements
 
@@ -42,18 +43,20 @@ Row 6: [   ][   ][   ][   ][   ][   ][+  ][=  ]
 - Follows universal calculator and phone keypad conventions
 - Muscle memory from other calculators transfers directly
 
-#### 2. **Logical Operator Column**
-- Division (÷) at top right
-- Multiply (×) in middle right area
-- Subtract (-) in lower right area
-- Add (+) at bottom right
-- Equals (=) at bottom right corner
-- Creates a natural flow for arithmetic operations
+#### 2. **Perfect Operator Column**
+- **Division (÷)** at top of operator column (row 1, rightmost)
+- **Multiply (×)** in operator column (row 2, rightmost)
+- **Subtract (-)** in operator column (row 3, rightmost)
+- **Add (+)** in operator column (row 4, rightmost)
+- **Equals (=)** at bottom of operator column (row 5, rightmost)
+- Forms a clean vertical column exactly like standard calculators
+- Natural flow for arithmetic operations from top to bottom
 
 #### 3. **Efficient Space Usage**
-- Reduced empty cells from 8 to 4
-- Empty cells only in bottom rows where needed for layout balance
+- Reduced empty cells from 8 to 5
+- Empty cells only where needed for visual balance
 - Zero button spans 2 columns for better ergonomics (common on calculators)
+- 9-column grid optimally uses space: 4 scientific + 1 spacer + 3 numbers + 1 operator
 
 #### 4. **Grouped Scientific Functions**
 - **Row 1**: Memory and clear functions (MC, MR, M+, MS, AC, C, ⌫)
