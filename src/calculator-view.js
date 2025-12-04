@@ -101,7 +101,7 @@ class CalculatorView {
         buttonGrid.className = 'button-grid';
 
         // Button layout definition - compact 4-column layout
-        // Maximum 4 buttons per row for clean, organized appearance
+        // Standard calculator layout with number pad in columns 1-2-3
         const buttonLayout = [
             // Row 1: Memory functions
             [
@@ -110,63 +110,63 @@ class CalculatorView {
                 { text: 'M+', type: 'control', action: 'memory-add' },
                 { text: 'MS', type: 'control', action: 'memory-store' }
             ],
-            // Row 2: Clear functions
+            // Row 2: Clear functions + divide
             [
                 { text: 'AC', type: 'control', action: 'all-clear' },
                 { text: 'C', type: 'control', action: 'clear' },
                 { text: '⌫', type: 'control', action: 'backspace' },
                 { text: '÷', type: 'operator', action: '/' }
             ],
-            // Row 3: Trigonometric functions
+            // Row 3: Trigonometric functions + angle mode
             [
                 { text: 'sin', type: 'function', action: 'sin' },
                 { text: 'cos', type: 'function', action: 'cos' },
                 { text: 'tan', type: 'function', action: 'tan' },
                 { text: 'DEG/RAD', type: 'control', action: 'angle-mode' }
             ],
-            // Row 4: Logarithmic and constants
+            // Row 4: Logarithmic functions + constants
             [
                 { text: 'ln', type: 'function', action: 'ln' },
                 { text: 'log', type: 'function', action: 'log' },
                 { text: 'e', type: 'function', action: 'e' },
                 { text: 'π', type: 'function', action: 'pi' }
             ],
-            // Row 5: Root, power, factorial, exp
+            // Row 5: Advanced functions
             [
                 { text: '√', type: 'function', action: 'sqrt' },
                 { text: '^', type: 'operator', action: '^' },
                 { text: '!', type: 'function', action: 'factorial' },
                 { text: 'exp', type: 'function', action: 'exp' }
             ],
-            // Row 6: Parentheses and number pad row 1
+            // Row 6: Parentheses, negate + multiply
             [
                 { text: '(', type: 'control', action: 'open-paren' },
                 { text: ')', type: 'control', action: 'close-paren' },
-                { text: '7', type: 'number', action: '7' },
+                { text: '±', type: 'control', action: 'negate' },
                 { text: '×', type: 'operator', action: '*' }
             ],
-            // Row 7: Number pad row 2
+            // Row 7: Number pad row 1 (7,8,9) + subtract
             [
-                { text: '±', type: 'control', action: 'negate' },
+                { text: '7', type: 'number', action: '7' },
                 { text: '8', type: 'number', action: '8' },
                 { text: '9', type: 'number', action: '9' },
                 { text: '-', type: 'operator', action: '-' }
             ],
-            // Row 8: Number pad row 3
+            // Row 8: Number pad row 2 (4,5,6) + add
             [
                 { text: '4', type: 'number', action: '4' },
                 { text: '5', type: 'number', action: '5' },
                 { text: '6', type: 'number', action: '6' },
                 { text: '+', type: 'operator', action: '+' }
             ],
-            // Row 9: Number pad row 4
+            // Row 9: Number pad row 3 (1,2,3) + equals
             [
                 { text: '1', type: 'number', action: '1' },
                 { text: '2', type: 'number', action: '2' },
                 { text: '3', type: 'number', action: '3' },
                 { text: '=', type: 'control', action: 'equals', className: 'equals-button' }
             ],
-            // Row 10: Bottom row with 0 spanning 2 columns
+            // Row 10: Number pad row 4 (0 spanning 2, decimal)
             [
                 { text: '0', type: 'number', action: '0', className: 'zero-button' },
                 { text: '.', type: 'control', action: 'decimal' }
