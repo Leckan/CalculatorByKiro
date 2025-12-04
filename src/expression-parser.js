@@ -79,13 +79,34 @@ class ExpressionParser {
                 continue;
             }
             
-            // Handle numbers (including decimals and negative numbers)
+            // Handle numbers (including decimals, negative numbers, and scientific notation)
             if (this.isDigit(char) || (char === '.' && i + 1 < expression.length && this.isDigit(expression[i + 1]))) {
                 let numStr = '';
+                
+                // Parse the main number part (digits and decimal point)
                 while (i < expression.length && (this.isDigit(expression[i]) || expression[i] === '.')) {
                     numStr += expression[i];
                     i++;
                 }
+                
+                // Check for scientific notation (e or E followed by optional +/- and digits)
+                if (i < expression.length && (expression[i] === 'e' || expression[i] === 'E')) {
+                    numStr += expression[i];
+                    i++;
+                    
+                    // Handle optional sign after 'e'
+                    if (i < expression.length && (expression[i] === '+' || expression[i] === '-')) {
+                        numStr += expression[i];
+                        i++;
+                    }
+                    
+                    // Parse the exponent digits
+                    while (i < expression.length && this.isDigit(expression[i])) {
+                        numStr += expression[i];
+                        i++;
+                    }
+                }
+                
                 tokens.push({
                     type: 'number',
                     value: parseFloat(numStr)
@@ -117,13 +138,34 @@ class ExpressionParser {
                         i++;
                     }
                     
-                    // Now parse the number
+                    // Now parse the number (including scientific notation)
                     if (i < expression.length && (this.isDigit(expression[i]) || expression[i] === '.')) {
                         let numStr = '-';
+                        
+                        // Parse the main number part
                         while (i < expression.length && (this.isDigit(expression[i]) || expression[i] === '.')) {
                             numStr += expression[i];
                             i++;
                         }
+                        
+                        // Check for scientific notation
+                        if (i < expression.length && (expression[i] === 'e' || expression[i] === 'E')) {
+                            numStr += expression[i];
+                            i++;
+                            
+                            // Handle optional sign after 'e'
+                            if (i < expression.length && (expression[i] === '+' || expression[i] === '-')) {
+                                numStr += expression[i];
+                                i++;
+                            }
+                            
+                            // Parse the exponent digits
+                            while (i < expression.length && this.isDigit(expression[i])) {
+                                numStr += expression[i];
+                                i++;
+                            }
+                        }
+                        
                         tokens.push({
                             type: 'number',
                             value: parseFloat(numStr)
