@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test: Button Stagger Animation - Task 13</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            color: #333;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+        
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .pass {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .fail {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        button {
+            margin: 10px 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        
+        button:hover {
+            background: #5568d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Task 13: Button Stagger Animation Test</h1>
+        <p><strong>Requirements:</strong> 10.2, 10.3</p>
+        
+        <div class="test-section">
+            <h2>Test Instructions</h2>
+            <p>This test verifies the staggered button entrance animations:</p>
+            <ol>
+                <li>Click "Reload Calculator" to see the entrance animation</li>
+                <li>Observe buttons appearing with staggered delays</li>
+                <li>Verify the cascading effect creates a smooth entrance</li>
+                <li>Check that all animations complete within 800ms total</li>
+            </ol>
+            <button onclick="reloadCalculator()">Reload Calculator</button>
+            <button onclick="runAutomatedTests()">Run Automated Tests</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>Visual Test</h2>
+            <div id="calculator-container"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Test Results</h2>
+            <div id="test-results"></div>
+        </div>
+    </div>
+    
+    <script src="../src/number-formatter.js"></script>
+    <script src="../src/calculator-engine.js"></script>
+    <script src="../src/state-manager.js"></script>
+    <script src="../src/memory-manager.js"></script>
+    <script src="../src/expression-parser.js"></script>
+    <script src="../src/calculator-view.js"></script>
+    <script src="../src/calculator-controller.js"></script>
+    
+    <script>
+        let view, controller;
+        
+        function initCalculator() {
+            view = new CalculatorView('calculator-container');
+            controller = new CalculatorController(view);
+            controller.init();
+        }
+        
+        function reloadCalculator() {
+            const container = document.getElementById('calculator-container');
+            container.innerHTML = '';
+            setTimeout(() => {
+                initCalculator();
+            }, 100);
+        }
+        
+        function runAutomatedTests() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '<div class="info">Running tests...</div>';
+            
+            // Wait a bit for any existing animations to complete
+            setTimeout(() => {
+                const testResults = [];
+                
+                // Test 1: Check if buttonStagger keyframe exists
+                const stylesheets = Array.from(document.styleSheets);
+                let buttonStaggerExists = false;
+                
+                try {
+                    for (const sheet of stylesheets) {
+                        try {
+                            const rules = Array.from(sheet.cssRules || sheet.rules || []);
+                            for (const rule of rules) {
+                                if (rule.type === CSSRule.KEYFRAMES_RULE && rule.name === 'buttonStagger') {
+                                    buttonStaggerExists = true;
+                                    break;
+                                }
+                            }
+                        } catch (e) {
+                            // Skip stylesheets we can't access (CORS)
+                            continue;
+                        }
+                        if (buttonStaggerExists) break;
+                    }
+                } catch (e) {
+                    console.error('Error checking keyframes:', e);
+                }
+                
+                testResults.push({
+                    name: 'buttonStagger keyframe exists',
+                    pass: buttonStaggerExists,
+                    message: buttonStaggerExists ? 
+                        'buttonStagger keyframe animation found' : 
+                        'buttonStagger keyframe animation not found'
+                });
+                
+                // Test 2: Check if buttons have animation applied
+                const buttons = document.querySelectorAll('.calc-button');
+                const hasButtons = buttons.length > 0;
+                
+                testResults.push({
+                    name: 'Calculator buttons exist',
+                    pass: hasButtons,
+                    message: `Found ${buttons.length} buttons`
+                });
+                
+                if (hasButtons) {
+                    // Test 3: Check if first button has animation
+                    const firstButton = buttons[0];
+                    const computedStyle = window.getComputedStyle(firstButton);
+                    const animationName = computedStyle.animationName;
+                    const hasAnimation = animationName.includes('buttonStagger');
+                    
+                    testResults.push({
+                        name: 'Buttons have buttonStagger animation',
+                        pass: hasAnimation,
+                        message: hasAnimation ? 
+                            `Animation applied: ${animationName}` : 
+                            `No buttonStagger animation found. Animation: ${animationName}`
+                    });
+                    
+                    // Test 4: Check animation duration
+                    const animationDuration = computedStyle.animationDuration;
+                    const durationMs = parseFloat(animationDuration) * 1000;
+                    const correctDuration = durationMs === 600;
+                    
+                    testResults.push({
+                        name: 'Animation duration is 600ms',
+                        pass: correctDuration,
+                        message: `Duration: ${durationMs}ms (expected 600ms)`
+                    });
+                    
+                    // Test 5: Check staggered delays
+                    const delays = [];
+                    for (let i = 0; i < Math.min(buttons.length, 10); i++) {
+                        const button = buttons[i];
+                        const style = window.getComputedStyle(button);
+                        const delay = parseFloat(style.animationDelay) * 1000;
+                        delays.push(delay);
+                    }
+                    
+                    // Check if delays are increasing
+                    let delaysIncreasing = true;
+                    for (let i = 1; i < delays.length; i++) {
+                        if (delays[i] < delays[i-1]) {
+                            delaysIncreasing = false;
+                            break;
+                        }
+                    }
+                    
+                    testResults.push({
+                        name: 'Animation delays are staggered',
+                        pass: delaysIncreasing,
+                        message: delaysIncreasing ? 
+                            `First 10 delays: ${delays.map(d => d + 'ms').join(', ')}` : 
+                            `Delays not properly staggered: ${delays.map(d => d + 'ms').join(', ')}`
+                    });
+                    
+                    // Test 6: Check stagger increment is 30ms
+                    const expectedIncrement = 30;
+                    let correctIncrement = true;
+                    for (let i = 1; i < Math.min(delays.length, 5); i++) {
+                        const increment = delays[i] - delays[i-1];
+                        if (Math.abs(increment - expectedIncrement) > 1) {
+                            correctIncrement = false;
+                            break;
+                        }
+                    }
+                    
+                    testResults.push({
+                        name: 'Stagger increment is 30ms',
+                        pass: correctIncrement,
+                        message: correctIncrement ? 
+                            'Increment is 30ms between buttons' : 
+                            'Increment is not 30ms'
+                    });
+                    
+                    // Test 7: Check total stagger time fits within 800ms
+                    const maxDelay = Math.max(...Array.from(buttons).map(btn => {
+                        return parseFloat(window.getComputedStyle(btn).animationDelay) * 1000;
+                    }));
+                    const totalTime = maxDelay + 600; // max delay + animation duration
+                    const fitsWithin800 = maxDelay <= 800;
+                    
+                    testResults.push({
+                        name: 'Total stagger time fits within 800ms',
+                        pass: fitsWithin800,
+                        message: `Max delay: ${maxDelay}ms (should be ≤ 800ms). Total time: ${totalTime}ms`
+                    });
+                    
+                    // Test 8: Check animation fill mode
+                    const fillMode = computedStyle.animationFillMode;
+                    const correctFillMode = fillMode === 'both';
+                    
+                    testResults.push({
+                        name: 'Animation fill mode is "both"',
+                        pass: correctFillMode,
+                        message: `Fill mode: ${fillMode} (expected "both")`
+                    });
+                }
+                
+                // Display results
+                let html = '';
+                let passCount = 0;
+                let totalCount = testResults.length;
+                
+                testResults.forEach(result => {
+                    if (result.pass) passCount++;
+                    html += `<div class="${result.pass ? 'pass' : 'fail'} test-result">
+                        <strong>${result.pass ? '✓' : '✗'} ${result.name}</strong><br>
+                        ${result.message}
+                    </div>`;
+                });
+                
+                html = `<div class="info">Tests completed: ${passCount}/${totalCount} passed</div>` + html;
+                results.innerHTML = html;
+            }, 500);
+        }
+        
+        // Initialize calculator on load
+        initCalculator();
+    </script>
+</body>
+</html>

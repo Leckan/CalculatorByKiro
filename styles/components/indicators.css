@@ -1,0 +1,79 @@
+/* Indicator Styles */
+/* Task 11: Requirements 6.1, 6.2, 6.3, 6.4 */
+
+/* Base indicator transitions - Requirement 6.4 */
+.indicator {
+    /* Smooth transitions for all state changes - 250ms duration */
+    transition: all var(--duration-normal) var(--easing-standard);
+}
+
+/* Active state for angle mode indicator - Requirements 6.1 */
+.angle-mode {
+    /* Smooth transition when toggling modes */
+    transition: all var(--duration-normal) var(--easing-standard);
+}
+
+.angle-mode.active {
+    /* Scale effect for active state */
+    transform: scale(1.05);
+    
+    /* Glow effect using box-shadow */
+    box-shadow: 0 0 12px rgba(102, 126, 234, 0.5),
+                0 0 24px rgba(102, 126, 234, 0.3);
+    
+    /* Enhanced background for active state */
+    background: rgba(102, 126, 234, 0.3);
+}
+
+/* Memory indicator with pulse animation - Requirement 6.2 */
+.memory {
+    /* Smooth transition for state changes */
+    transition: all var(--duration-normal) var(--easing-standard);
+}
+
+/* Pulse animation for memory indicator when active */
+@keyframes indicatorPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
+}
+
+.memory.active {
+    /* Apply pulse animation when memory has value */
+    animation: indicatorPulse 2s ease-in-out infinite;
+    
+    /* Enhanced background for active state */
+    background: rgba(245, 158, 11, 0.3);
+    
+    /* Subtle glow effect */
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
+
+/* Parenthesis level indicator - Requirement 6.3 */
+.parenthesis {
+    /* Smooth transition for level changes */
+    transition: all var(--duration-normal) var(--easing-standard);
+}
+
+/* Active state when parenthesis level > 0 */
+.parenthesis.active {
+    /* Scale effect for active state */
+    transform: scale(1.05);
+    
+    /* Enhanced background for active state */
+    background: rgba(139, 92, 246, 0.3);
+    
+    /* Glow effect */
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+}
+
+/* Hover effects for indicators (subtle feedback) */
+.indicator:hover {
+    /* Slight brightness increase on hover */
+    filter: brightness(1.1);
+}

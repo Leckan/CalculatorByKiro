@@ -1,0 +1,383 @@
+/* Scientific Calculator Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+#calculator-container {
+    width: 100%;
+    max-width: 450px;
+}
+
+/* Calculator Container */
+.calculator {
+    background: #2d2d2d;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    padding: 24px;
+    overflow: hidden;
+}
+
+/* Display Area */
+.display-area {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.secondary-display {
+    color: #888;
+    font-size: 14px;
+    min-height: 20px;
+    text-align: right;
+    margin-bottom: 8px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.main-display {
+    color: #fff;
+    font-size: 36px;
+    font-weight: 300;
+    min-height: 48px;
+    text-align: right;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    letter-spacing: 1px;
+}
+
+/* Mode Indicators */
+.indicators-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #333;
+}
+
+.indicator {
+    font-size: 12px;
+    color: #888;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #252525;
+    min-width: 40px;
+    text-align: center;
+}
+
+.indicator.angle-mode {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.indicator.memory {
+    color: #f59e0b;
+    font-weight: 600;
+    min-width: 24px;
+}
+
+.indicator.parenthesis {
+    color: #10b981;
+}
+
+/* Error Display */
+.error-display {
+    color: #ef4444;
+    font-size: 14px;
+    margin-top: 12px;
+    padding: 8px;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 6px;
+    border-left: 3px solid #ef4444;
+}
+
+/* Button Grid */
+.button-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.button-row {
+    display: flex;
+    gap: 8px;
+}
+
+/* Button Spacer */
+.button-spacer {
+    flex: 1;
+    min-height: 56px;
+}
+
+/* Base Button Styles */
+.calc-button {
+    flex: 1;
+    min-height: 56px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Wide button (for 0) */
+.wide-button {
+    flex: 2;
+}
+
+.calc-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.calc-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Focus indicator for accessibility */
+.calc-button:focus {
+    outline: 3px solid #667eea;
+    outline-offset: 2px;
+}
+
+.calc-button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.calc-button:focus-visible {
+    outline: 3px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Number Buttons */
+.number-button {
+    background: #404040;
+    color: #fff;
+}
+
+.number-button:hover {
+    background: #4a4a4a;
+}
+
+.number-button:active {
+    background: #353535;
+}
+
+/* Operator Buttons */
+.operator-button {
+    background: #667eea;
+    color: #fff;
+}
+
+.operator-button:hover {
+    background: #7c8ff0;
+}
+
+.operator-button:active {
+    background: #5568d3;
+}
+
+/* Function Buttons */
+.function-button {
+    background: #764ba2;
+    color: #fff;
+    font-size: 16px;
+}
+
+.function-button:hover {
+    background: #8b5cb8;
+}
+
+.function-button:active {
+    background: #653d8a;
+}
+
+/* Control Buttons */
+.control-button {
+    background: #525252;
+    color: #fff;
+}
+
+.control-button:hover {
+    background: #5c5c5c;
+}
+
+.control-button:active {
+    background: #474747;
+}
+
+/* Special button styles */
+.control-button[data-action="all-clear"],
+.control-button[data-action="clear"] {
+    background: #ef4444;
+    color: #fff;
+}
+
+.control-button[data-action="all-clear"]:hover,
+.control-button[data-action="clear"]:hover {
+    background: #f87171;
+}
+
+.control-button[data-action="all-clear"]:active,
+.control-button[data-action="clear"]:active {
+    background: #dc2626;
+}
+
+.equals-button {
+    background: #10b981 !important;
+    color: #fff !important;
+    flex: 2;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.equals-button:hover {
+    background: #34d399 !important;
+}
+
+.equals-button:active {
+    background: #059669 !important;
+}
+
+/* Memory buttons styling */
+.control-button[data-action^="memory"] {
+    background: #f59e0b;
+    color: #fff;
+    font-size: 14px;
+}
+
+.control-button[data-action^="memory"]:hover {
+    background: #fbbf24;
+}
+
+.control-button[data-action^="memory"]:active {
+    background: #d97706;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .calculator {
+        padding: 16px;
+    }
+    
+    .display-area {
+        padding: 16px;
+    }
+    
+    .main-display {
+        font-size: 28px;
+    }
+    
+    .secondary-display {
+        font-size: 12px;
+    }
+    
+    .calc-button {
+        min-height: 48px;
+        font-size: 16px;
+    }
+    
+    .function-button {
+        font-size: 14px;
+    }
+    
+    .equals-button {
+        font-size: 20px;
+    }
+    
+    .button-grid {
+        gap: 6px;
+    }
+    
+    .button-row {
+        gap: 6px;
+    }
+}
+
+@media (max-width: 380px) {
+    .calc-button {
+        min-height: 44px;
+        font-size: 14px;
+    }
+    
+    .main-display {
+        font-size: 24px;
+    }
+    
+    .function-button {
+        font-size: 12px;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .calculator {
+        border: 2px solid #fff;
+    }
+    
+    .calc-button {
+        border: 1px solid #fff;
+    }
+    
+    .display-area {
+        border: 1px solid #fff;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .calc-button {
+        transition: none;
+    }
+    
+    .calc-button:hover {
+        transform: none;
+    }
+    
+    .calc-button:active {
+        transform: none;
+    }
+}
+
+/* Dark mode support (already dark, but ensuring consistency) */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: #fff;
+    }
+    
+    .calculator {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+    
+    .calc-button {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+}

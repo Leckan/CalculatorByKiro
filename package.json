@@ -1,0 +1,30 @@
+{
+  "name": "scientific-calculator",
+  "version": "1.0.0",
+  "description": "A fully-featured scientific calculator web application",
+  "main": "main.js",
+  "scripts": {
+    "test": "npm run test:all",
+    "test:all": "npm run test:engine && npm run test:parser && npm run test:memory && npm run test:state && npm run test:integration && npm run test:negate && npm run test:negative && npm run test:error",
+    "test:engine": "node tests/test-calculator-engine.js",
+    "test:parser": "node tests/test-expression-parser-unit.js && node tests/test-parser-unary-minus.js",
+    "test:memory": "node tests/test-memory-manager.js",
+    "test:state": "node tests/test-state-manager.js",
+    "test:integration": "node tests/test-integration-comprehensive.js",
+    "test:negate": "node tests/test-negate-functionality.js",
+    "test:negative": "node tests/test-all-negative-operations.js",
+    "test:error": "node tests/test-error-handling.js",
+    "serve": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "calculator",
+    "scientific-calculator",
+    "math",
+    "javascript",
+    "web-app"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}

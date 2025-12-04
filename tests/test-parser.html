@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpressionParser Test</title>
+</head>
+<body>
+    <h1>ExpressionParser Test Results</h1>
+    <pre id="output"></pre>
+
+    <script src="calculator-engine.js"></script>
+    <script src="expression-parser.js"></script>
+    <script>
+        const output = document.getElementById('output');
+        let results = '=== ExpressionParser Tests ===\n\n';
+
+        const engine = new CalculatorEngine();
+        const parser = new ExpressionParser(engine);
+
+        function test(name, fn) {
+            try {
+                const result = fn();
+                results += `✓ ${name}: ${result}\n`;
+            } catch (e) {
+                results += `✗ ${name}: ${e.message}\n`;
+            }
+        }
+
+        // Test basic arithmetic
+        test('Basic addition: 2 + 3', () => parser.evaluate('2 + 3'));
+        test('Order of operations: 2 + 3 × 4', () => parser.evaluate('2 + 3 × 4'));
+        test('Parentheses: (2 + 3) × 4', () => parser.evaluate('(2 + 3) × 4'));
+        test('Power: 2 ^ 3', () => parser.evaluate('2 ^ 3'));
+        test('Nested parentheses: ((2 + 3) × 4) - 1', () => parser.evaluate('((2 + 3) × 4) - 1'));
+        test('Division: 10 ÷ 2', () => parser.evaluate('10 ÷ 2'));
+
+        results += '\n--- Function Tests ---\n';
+        test('Square root: sqrt(16)', () => parser.evaluate('sqrt(16)'));
+        test('Function with expression: sqrt(9 + 16)', () => parser.evaluate('sqrt(9 + 16)'));
+        test('Natural log: ln(2.718281828)', () => parser.evaluate('ln(2.718281828)'));
+        test('Exponential: exp(1)', () => parser.evaluate('exp(1)'));
+
+        results += '\n--- Error Handling Tests ---\n';
+        test('Mismatched parentheses (should error)', () => {
+            try {
+                parser.evaluate('(2 + 3');
+                return 'FAILED - should have thrown error';
+            } catch (e) {
+                return `Correctly caught: ${e.message}`;
+            }
+        });
+
+        test('Extra closing parenthesis (should error)', () => {
+            try {
+                parser.evaluate('2 + 3)');
+                return 'FAILED - should have thrown error';
+            } catch (e) {
+                return `Correctly caught: ${e.message}`;
+            }
+        });
+
+        results += '\n--- Nested Parentheses Tests ---\n';
+        test('10 levels of nesting', () => {
+            const deepNesting = '((((((((((1))))))))))';
+            return parser.evaluate(deepNesting);
+        });
+
+        test('11 levels of nesting (should error)', () => {
+            try {
+                const tooDeep = '(((((((((((1)))))))))))';
+                parser.evaluate(tooDeep);
+                return 'FAILED - should have thrown error';
+            } catch (e) {
+                return `Correctly caught: ${e.message}`;
+            }
+        });
+
+        results += '\n--- Complex Expression Tests ---\n';
+        test('Complex: (2 + 3) × (4 - 1)', () => parser.evaluate('(2 + 3) × (4 - 1)'));
+        test('With function: sqrt(16) + 2 ^ 3', () => parser.evaluate('sqrt(16) + 2 ^ 3'));
+        test('Nested functions: sqrt(sqrt(256))', () => parser.evaluate('sqrt(sqrt(256))'));
+
+        results += '\n--- Operator Precedence Tests ---\n';
+        test('2 + 3 × 4 - 1', () => parser.evaluate('2 + 3 × 4 - 1'));
+        test('2 ^ 3 ^ 2 (right associative)', () => parser.evaluate('2 ^ 3 ^ 2'));
+        test('10 - 5 - 2 (left associative)', () => parser.evaluate('10 - 5 - 2'));
+
+        results += '\n=== All tests completed! ===';
+        output.textContent = results;
+        console.log(results);
+    </script>
+</body>
+</html>

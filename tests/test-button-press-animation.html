@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Press Animation Test</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            padding: 40px;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .test-result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .test-result.pass {
+            background: #d4edda;
+            color: #155724;
+        }
+        .test-result.fail {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .test-button-container {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Button Press Animation Test - Task 8</h1>
+    <p>Requirements: 2.1, 2.5</p>
+
+    <div class="test-container">
+        <h2>Test 1: Animation Keyframe Exists</h2>
+        <p>Verify that the buttonPress keyframe animation is defined in CSS</p>
+        <div id="test1-result" class="test-result"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>Test 2: Animation Timing (150ms)</h2>
+        <p>Verify that the animation duration is 150ms</p>
+        <div id="test2-result" class="test-result"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>Test 3: Visual Test - Click Buttons</h2>
+        <p>Click the buttons below and observe the press animation (scale effect)</p>
+        <div class="test-button-container">
+            <button class="calc-button number-button" id="test-number">5</button>
+            <button class="calc-button operator-button" id="test-operator">+</button>
+            <button class="calc-button function-button" id="test-function">sin</button>
+            <button class="calc-button control-button" id="test-control">C</button>
+        </div>
+        <div id="test3-result" class="test-result"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>Test 4: Pressed Class Added/Removed</h2>
+        <p>Verify that 'pressed' class is added on click and removed after animation</p>
+        <button class="calc-button number-button" id="test-class-button">Test</button>
+        <div id="test4-result" class="test-result"></div>
+    </div>
+
+    <script>
+        // Test 1: Check if buttonPress keyframe exists
+        function test1() {
+            const styleSheets = Array.from(document.styleSheets);
+            let found = false;
+            
+            try {
+                for (const sheet of styleSheets) {
+                    try {
+                        const rules = Array.from(sheet.cssRules || []);
+                        for (const rule of rules) {
+                            if (rule.type === CSSRule.KEYFRAMES_RULE && rule.name === 'buttonPress') {
+                                found = true;
+                                break;
+                            }
+                        }
+                    } catch (e) {
+                        // Skip cross-origin stylesheets
+                        continue;
+                    }
+                    if (found) break;
+                }
+            } catch (e) {
+                console.error('Error checking keyframes:', e);
+            }
+            
+            const result = document.getElementById('test1-result');
+            if (found) {
+                result.className = 'test-result pass';
+                result.textContent = '✓ PASS: buttonPress keyframe animation found';
+            } else {
+                result.className = 'test-result fail';
+                result.textContent = '✗ FAIL: buttonPress keyframe animation not found';
+            }
+        }
+
+        // Test 2: Check animation timing
+        function test2() {
+            const testButton = document.getElementById('test-number');
+            const computedStyle = window.getComputedStyle(testButton);
+            
+            // Add pressed class to check animation properties
+            testButton.classList.add('pressed');
+            const animationDuration = window.getComputedStyle(testButton).animationDuration;
+            testButton.classList.remove('pressed');
+            
+            const result = document.getElementById('test2-result');
+            const durationMs = parseFloat(animationDuration) * 1000;
+            
+            if (durationMs === 150) {
+                result.className = 'test-result pass';
+                result.textContent = `✓ PASS: Animation duration is ${durationMs}ms (expected 150ms)`;
+            } else {
+                result.className = 'test-result fail';
+                result.textContent = `✗ FAIL: Animation duration is ${durationMs}ms (expected 150ms)`;
+            }
+        }
+
+        // Test 3: Visual test setup
+        function test3() {
+            const buttons = [
+                document.getElementById('test-number'),
+                document.getElementById('test-operator'),
+                document.getElementById('test-function'),
+                document.getElementById('test-control')
+            ];
+            
+            let clickCount = 0;
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.classList.add('pressed');
+                    setTimeout(() => {
+                        button.classList.remove('pressed');
+                    }, 150);
+                    
+                    clickCount++;
+                    const result = document.getElementById('test3-result');
+                    result.className = 'test-result pass';
+                    result.textContent = `✓ Buttons clicked ${clickCount} times. Animation should be visible on each click.`;
+                });
+            });
+            
+            const result = document.getElementById('test3-result');
+            result.className = 'test-result';
+            result.textContent = 'Click the buttons above to test the animation visually.';
+        }
+
+        // Test 4: Check class addition/removal
+        function test4() {
+            const button = document.getElementById('test-class-button');
+            const result = document.getElementById('test4-result');
+            
+            button.addEventListener('click', () => {
+                // Check if class is added
+                button.classList.add('pressed');
+                const hasClassImmediately = button.classList.contains('pressed');
+                
+                // Check if class is removed after 150ms
+                setTimeout(() => {
+                    const hasClassAfter150ms = button.classList.contains('pressed');
+                    
+                    if (hasClassImmediately && !hasClassAfter150ms) {
+                        result.className = 'test-result pass';
+                        result.textContent = '✓ PASS: "pressed" class added on click and removed after 150ms';
+                    } else if (hasClassImmediately && hasClassAfter150ms) {
+                        result.className = 'test-result fail';
+                        result.textContent = '✗ FAIL: "pressed" class not removed after 150ms';
+                    } else {
+                        result.className = 'test-result fail';
+                        result.textContent = '✗ FAIL: "pressed" class not added on click';
+                    }
+                }, 160);
+            });
+            
+            result.className = 'test-result';
+            result.textContent = 'Click the "Test" button above to verify class behavior.';
+        }
+
+        // Run tests on page load
+        window.addEventListener('load', () => {
+            test1();
+            test2();
+            test3();
+            test4();
+        });
+    </script>
+</body>
+</html>

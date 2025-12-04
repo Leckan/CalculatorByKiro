@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Formatting Tests</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        pre {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .pass { color: green; }
+        .fail { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Display Formatting Test Suite</h1>
+    <pre id="output"></pre>
+
+    <script src="number-formatter.js"></script>
+    <script>
+        // Capture console output
+        const output = document.getElementById('output');
+        const originalLog = console.log;
+        
+        console.log = function(...args) {
+            const text = args.join(' ');
+            const span = document.createElement('span');
+            
+            if (text.includes('✓')) {
+                span.className = 'pass';
+            } else if (text.includes('✗')) {
+                span.className = 'fail';
+            }
+            
+            span.textContent = text + '\n';
+            output.appendChild(span);
+            originalLog.apply(console, args);
+        };
+    </script>
+    <script src="test-display-formatting.js"></script>
+</body>
+</html>

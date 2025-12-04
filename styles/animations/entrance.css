@@ -1,0 +1,40 @@
+/* ========================================
+   ENTRANCE ANIMATIONS
+   Requirements: 10.1, 10.2, 10.3, 10.4, 10.5
+   ======================================== */
+
+/* Calculator Entrance Animation - fadeInScale
+   - Fades in from 0 opacity to 1
+   - Scales from 0.9 to 1
+   - Translates from 20px below to original position
+   - Duration: 600ms with decelerate easing
+   - Calculator remains interactive during animation
+*/
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Button Stagger Animation - buttonStagger
+   Task 13: Requirements 10.2, 10.3
+   - Fades in from 0 opacity to 1
+   - Translates from 10px below to original position
+   - Applied with staggered delays (30ms per button)
+   - Total stagger time fits within 800ms
+*/
+@keyframes buttonStagger {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

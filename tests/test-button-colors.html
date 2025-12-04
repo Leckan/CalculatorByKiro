@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Color Schemes Test - Task 6</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            padding: 2rem;
+        }
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        .test-section h2 {
+            color: var(--color-text-primary);
+            margin-bottom: 1rem;
+        }
+        .test-results {
+            font-family: monospace;
+            white-space: pre-wrap;
+            color: var(--color-text-secondary);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        .color-swatch {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            margin-right: 1rem;
+            vertical-align: middle;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        .color-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--color-text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-section">
+        <h2>Task 6: Button Color Schemes Verification</h2>
+        <p style="color: var(--color-text-secondary);">
+            This test verifies that all button types have the correct colors and meet accessibility contrast requirements.
+        </p>
+    </div>
+
+    <div class="test-section">
+        <h2>Expected Colors (WCAG AA Compliant)</h2>
+        <div class="color-info">
+            <span class="color-swatch" style="background: #1e293b;"></span>
+            <span>Number buttons: #1e293b (Dark Slate) - 13.98:1 contrast</span>
+        </div>
+        <div class="color-info">
+            <span class="color-swatch" style="background: #5b21b6;"></span>
+            <span>Operator buttons: #5b21b6 (Dark Purple) - 8.98:1 contrast</span>
+        </div>
+        <div class="color-info">
+            <span class="color-swatch" style="background: #6d28d9;"></span>
+            <span>Function buttons: #6d28d9 (Dark Violet) - 7.10:1 contrast</span>
+        </div>
+        <div class="color-info">
+            <span class="color-swatch" style="background: #dc2626;"></span>
+            <span>Control buttons: #dc2626 (Dark Red) - 4.83:1 contrast</span>
+        </div>
+        <div class="color-info">
+            <span class="color-swatch" style="background: #047857;"></span>
+            <span>Equals button: #047857 (Dark Green) - 5.48:1 contrast</span>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Automated Test Results</h2>
+        <p style="color: var(--color-text-secondary);">
+            Open the browser console to see detailed test results.
+        </p>
+        <div id="test-results" class="test-results">Running tests...</div>
+    </div>
+
+    <script src="verify-button-colors.js"></script>
+    <script>
+        // Capture console output and display in page
+        const originalLog = console.log;
+        let output = '';
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            output += args.join(' ') + '\n';
+            document.getElementById('test-results').textContent = output;
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Press Animation Integration Test</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .test-info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+        .test-info h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .test-info ul {
+            line-height: 1.8;
+        }
+        .test-info .pass {
+            color: #155724;
+            font-weight: bold;
+        }
+        #calculator-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Button Press Animation Integration Test</h2>
+        <p><strong>Task 8: Requirements 2.1, 2.5</strong></p>
+        
+        <h3>Test Instructions:</h3>
+        <ul>
+            <li>Click any button on the calculator below</li>
+            <li>Observe the button press animation (scale effect)</li>
+            <li>The button should briefly scale down to 0.95 and return to normal</li>
+            <li>Animation should complete in 150ms</li>
+            <li>All button types should animate (number, operator, function, control)</li>
+        </ul>
+        
+        <h3>Expected Behavior:</h3>
+        <ul>
+            <li class="pass">✓ Button scales down smoothly when clicked</li>
+            <li class="pass">✓ Animation completes quickly (150ms)</li>
+            <li class="pass">✓ Button returns to original size after animation</li>
+            <li class="pass">✓ Animation works on all button types</li>
+            <li class="pass">✓ Calculator functionality remains intact</li>
+        </ul>
+    </div>
+
+    <div id="calculator-container">
+        <!-- Calculator will be rendered here -->
+    </div>
+
+    <!-- Load calculator modules -->
+    <script src="../src/number-formatter.js"></script>
+    <script src="../src/calculator-engine.js"></script>
+    <script src="../src/state-manager.js"></script>
+    <script src="../src/memory-manager.js"></script>
+    <script src="../src/expression-parser.js"></script>
+    <script src="../src/calculator-view.js"></script>
+    <script src="../src/calculator-controller.js"></script>
+    <script>
+        // Initialize calculator
+        const engine = new CalculatorEngine();
+        const stateManager = new StateManager();
+        const memoryManager = new MemoryManager();
+        const view = new CalculatorView('calculator-container');
+        const controller = new CalculatorController(engine, stateManager, memoryManager, view);
+
+        // Render the calculator
+        view.render();
+
+        // Bind event handlers
+        view.bindNumberButton((digit) => controller.handleNumberInput(digit));
+        view.bindOperatorButton((operator) => controller.handleOperatorInput(operator));
+        view.bindFunctionButton((func) => controller.handleScientificFunction(func));
+        view.bindControlButton((action) => {
+            switch (action) {
+                case 'clear':
+                    controller.handleClear();
+                    break;
+                case 'all-clear':
+                    controller.handleAllClear();
+                    break;
+                case 'backspace':
+                    controller.handleBackspace();
+                    break;
+                case 'equals':
+                    controller.handleEquals();
+                    break;
+                case 'decimal':
+                    controller.handleDecimalPoint();
+                    break;
+                case 'negate':
+                    controller.handleNegate();
+                    break;
+                case 'angle-mode':
+                    controller.handleAngleModeToggle();
+                    break;
+                case 'open-paren':
+                    controller.handleParenthesis('open');
+                    break;
+                case 'close-paren':
+                    controller.handleParenthesis('close');
+                    break;
+                case 'memory-store':
+                    controller.handleMemoryStore();
+                    break;
+                case 'memory-recall':
+                    controller.handleMemoryRecall();
+                    break;
+                case 'memory-clear':
+                    controller.handleMemoryClear();
+                    break;
+                case 'memory-add':
+                    controller.handleMemoryAdd();
+                    break;
+            }
+        });
+
+        // Initialize display
+        controller.updateDisplay();
+
+        // Add animation monitoring for testing
+        let animationCount = 0;
+        document.addEventListener('animationstart', (e) => {
+            if (e.animationName === 'buttonPress') {
+                animationCount++;
+                console.log(`Button press animation started (count: ${animationCount})`);
+            }
+        });
+
+        document.addEventListener('animationend', (e) => {
+            if (e.animationName === 'buttonPress') {
+                console.log(`Button press animation ended (duration: ${e.elapsedTime}s)`);
+            }
+        });
+
+        console.log('Calculator initialized. Click buttons to test press animation.');
+        console.log('Animation events will be logged to console.');
+    </script>
+</body>
+</html>

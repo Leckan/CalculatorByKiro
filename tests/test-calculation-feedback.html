@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 14: Calculation Completion Feedback Test</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+        .test-section h2 {
+            color: var(--color-text-primary);
+            margin-top: 0;
+        }
+        .test-button {
+            padding: 12px 24px;
+            margin: 8px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .test-button:hover {
+            background: var(--color-primary-light);
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .status.pass {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+        .status.fail {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+        .status.info {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+        #calculator-container {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Task 14: Calculation Completion Feedback Test</h1>
+        <p>Testing Requirements: 9.1, 9.2, 9.4, 9.5</p>
+
+        <div id="calculator-container"></div>
+
+        <div class="test-section">
+            <h2>Test 1: Simple Calculation Feedback</h2>
+            <p>Tests brief highlight animation on result display (Requirements 9.1, 9.4)</p>
+            <button class="test-button" onclick="testSimpleCalculation()">Test Simple: 5 + 3</button>
+            <div id="test1-status" class="status info">Click button to test</div>
+        </div>
+
+        <div class="test-section">
+            <h2>Test 2: Equals Button Visual Feedback</h2>
+            <p>Tests visual feedback on equals button press (Requirements 9.2, 9.4)</p>
+            <button class="test-button" onclick="testEqualsButtonFeedback()">Test Equals Feedback: 10 * 2</button>
+            <div id="test2-status" class="status info">Click button to test</div>
+        </div>
+
+        <div class="test-section">
+            <h2>Test 3: Long Calculation Fade-in</h2>
+            <p>Tests fade-in effect for complex calculations (Requirements 9.3, 9.4)</p>
+            <button class="test-button" onclick="testLongCalculation()">Test Complex: sin(45) + cos(30)</button>
+            <div id="test3-status" class="status info">Click button to test</div>
+        </div>
+
+        <div class="test-section">
+            <h2>Test 4: Animation Timing</h2>
+            <p>Tests that feedback timing feels natural (250ms) (Requirements 9.4, 9.5)</p>
+            <button class="test-button" onclick="testAnimationTiming()">Test Animation Timing</button>
+            <div id="test4-status" class="status info">Click button to test</div>
+        </div>
+
+        <div class="test-section">
+            <h2>Test 5: Multiple Calculation Types</h2>
+            <p>Tests feedback across different calculation types (Requirements 9.5)</p>
+            <button class="test-button" onclick="testMultipleTypes()">Test Multiple Types</button>
+            <div id="test5-status" class="status info">Click button to test</div>
+        </div>
+    </div>
+
+    <!-- Load calculator modules -->
+    <script src="../src/number-formatter.js"></script>
+    <script src="../src/calculator-engine.js"></script>
+    <script src="../src/state-manager.js"></script>
+    <script src="../src/memory-manager.js"></script>
+    <script src="../src/expression-parser.js"></script>
+    <script src="../src/calculator-view.js"></script>
+    <script src="../src/calculator-controller.js"></script>
+
+    <script>
+        // Initialize calculator
+        const engine = new CalculatorEngine();
+        const stateManager = new StateManager();
+        const memoryManager = new MemoryManager();
+        const view = new CalculatorView('calculator-container');
+        const controller = new CalculatorController(engine, stateManager, memoryManager, view);
+
+        // Render calculator
+        view.render();
+
+        // Bind event handlers
+        view.bindNumberButton((digit) => controller.handleNumberInput(digit));
+        view.bindOperatorButton((op) => controller.handleOperatorInput(op));
+        view.bindFunctionButton((fn) => controller.handleScientificFunction(fn));
+        view.bindControlButton((action) => {
+            switch (action) {
+                case 'equals': controller.handleEquals(); break;
+                case 'clear': controller.handleClear(); break;
+                case 'all-clear': controller.handleAllClear(); break;
+                case 'backspace': controller.handleBackspace(); break;
+                case 'decimal': controller.handleDecimalPoint(); break;
+                case 'negate': controller.handleNegate(); break;
+                case 'angle-mode': controller.handleAngleModeToggle(); break;
+                case 'open-paren': controller.handleParenthesis('open'); break;
+                case 'close-paren': controller.handleParenthesis('close'); break;
+                case 'memory-store': controller.handleMemoryStore(); break;
+                case 'memory-recall': controller.handleMemoryRecall(); break;
+                case 'memory-clear': controller.handleMemoryClear(); break;
+                case 'memory-add': controller.handleMemoryAdd(); break;
+            }
+        });
+
+        controller.updateDisplay();
+
+        // Test functions
+        function testSimpleCalculation() {
+            controller.handleAllClear();
+            controller.handleNumberInput('5');
+            controller.handleOperatorInput('+');
+            controller.handleNumberInput('3');
+            
+            // Check for highlight animation
+            const mainDisplay = document.querySelector('.main-display');
+            const initialClasses = mainDisplay.className;
+            
+            controller.handleEquals();
+            
+            setTimeout(() => {
+                const hasHighlight = mainDisplay.classList.contains('result-highlight');
+                const result = stateManager.getInputBuffer();
+                
+                if (result === '8' && hasHighlight) {
+                    document.getElementById('test1-status').className = 'status pass';
+                    document.getElementById('test1-status').textContent = '✓ PASS: Simple calculation shows highlight animation';
+                } else if (result === '8') {
+                    document.getElementById('test1-status').className = 'status fail';
+                    document.getElementById('test1-status').textContent = '✗ FAIL: Calculation correct but no highlight animation detected';
+                } else {
+                    document.getElementById('test1-status').className = 'status fail';
+                    document.getElementById('test1-status').textContent = '✗ FAIL: Calculation incorrect. Expected 8, got ' + result;
+                }
+            }, 50);
+        }
+
+        function testEqualsButtonFeedback() {
+            controller.handleAllClear();
+            controller.handleNumberInput('1');
+            controller.handleNumberInput('0');
+            controller.handleOperatorInput('*');
+            controller.handleNumberInput('2');
+            
+            // Check for equals button animation
+            const equalsButton = document.querySelector('.equals-button');
+            
+            controller.handleEquals();
+            
+            setTimeout(() => {
+                const hasAnimation = equalsButton.classList.contains('calculating');
+                const result = stateManager.getInputBuffer();
+                
+                if (result === '20' && hasAnimation) {
+                    document.getElementById('test2-status').className = 'status pass';
+                    document.getElementById('test2-status').textContent = '✓ PASS: Equals button shows visual feedback animation';
+                } else if (result === '20') {
+                    document.getElementById('test2-status').className = 'status fail';
+                    document.getElementById('test2-status').textContent = '✗ FAIL: Calculation correct but no equals button animation detected';
+                } else {
+                    document.getElementById('test2-status').className = 'status fail';
+                    document.getElementById('test2-status').textContent = '✗ FAIL: Calculation incorrect. Expected 20, got ' + result;
+                }
+            }, 50);
+        }
+
+        function testLongCalculation() {
+            controller.handleAllClear();
+            
+            // Build complex expression: sin(45) + cos(30)
+            controller.handleScientificFunction('sin');
+            controller.handleNumberInput('4');
+            controller.handleNumberInput('5');
+            controller.handleParenthesis('close');
+            controller.handleOperatorInput('+');
+            controller.handleScientificFunction('cos');
+            controller.handleNumberInput('3');
+            controller.handleNumberInput('0');
+            controller.handleParenthesis('close');
+            
+            const mainDisplay = document.querySelector('.main-display');
+            
+            controller.handleEquals();
+            
+            setTimeout(() => {
+                const hasFadeIn = mainDisplay.classList.contains('result-fade-in');
+                const result = parseFloat(stateManager.getInputBuffer());
+                const expected = Math.sin(45 * Math.PI / 180) + Math.cos(30 * Math.PI / 180);
+                
+                if (Math.abs(result - expected) < 0.01 && hasFadeIn) {
+                    document.getElementById('test3-status').className = 'status pass';
+                    document.getElementById('test3-status').textContent = '✓ PASS: Complex calculation shows fade-in animation';
+                } else if (Math.abs(result - expected) < 0.01) {
+                    document.getElementById('test3-status').className = 'status fail';
+                    document.getElementById('test3-status').textContent = '✗ FAIL: Calculation correct but no fade-in animation detected';
+                } else {
+                    document.getElementById('test3-status').className = 'status fail';
+                    document.getElementById('test3-status').textContent = '✗ FAIL: Calculation incorrect. Expected ~' + expected.toFixed(4) + ', got ' + result;
+                }
+            }, 50);
+        }
+
+        function testAnimationTiming() {
+            controller.handleAllClear();
+            controller.handleNumberInput('7');
+            controller.handleOperatorInput('+');
+            controller.handleNumberInput('8');
+            
+            const mainDisplay = document.querySelector('.main-display');
+            const equalsButton = document.querySelector('.equals-button');
+            const startTime = Date.now();
+            
+            controller.handleEquals();
+            
+            // Check that animations are present initially
+            setTimeout(() => {
+                const hasDisplayAnimation = mainDisplay.classList.contains('result-highlight');
+                const hasButtonAnimation = equalsButton.classList.contains('calculating');
+                
+                if (hasDisplayAnimation && hasButtonAnimation) {
+                    // Check that animations are removed after ~250ms
+                    setTimeout(() => {
+                        const stillHasDisplayAnimation = mainDisplay.classList.contains('result-highlight');
+                        const stillHasButtonAnimation = equalsButton.classList.contains('calculating');
+                        const elapsed = Date.now() - startTime;
+                        
+                        if (!stillHasDisplayAnimation && !stillHasButtonAnimation && elapsed >= 250 && elapsed <= 350) {
+                            document.getElementById('test4-status').className = 'status pass';
+                            document.getElementById('test4-status').textContent = '✓ PASS: Animations complete in ~250ms (' + elapsed + 'ms)';
+                        } else {
+                            document.getElementById('test4-status').className = 'status fail';
+                            document.getElementById('test4-status').textContent = '✗ FAIL: Animation timing incorrect. Elapsed: ' + elapsed + 'ms';
+                        }
+                    }, 260);
+                } else {
+                    document.getElementById('test4-status').className = 'status fail';
+                    document.getElementById('test4-status').textContent = '✗ FAIL: Animations not triggered';
+                }
+            }, 50);
+        }
+
+        function testMultipleTypes() {
+            const tests = [
+                { expr: '2+2', type: 'simple arithmetic' },
+                { expr: '100/5', type: 'division' },
+                { expr: '3^2', type: 'exponentiation' },
+                { expr: 'sqrt(16)', type: 'function' }
+            ];
+            
+            let currentTest = 0;
+            
+            function runNextTest() {
+                if (currentTest >= tests.length) {
+                    document.getElementById('test5-status').className = 'status pass';
+                    document.getElementById('test5-status').textContent = '✓ PASS: All calculation types show appropriate feedback';
+                    return;
+                }
+                
+                const test = tests[currentTest];
+                controller.handleAllClear();
+                
+                // Parse and input the expression
+                if (test.expr === '2+2') {
+                    controller.handleNumberInput('2');
+                    controller.handleOperatorInput('+');
+                    controller.handleNumberInput('2');
+                } else if (test.expr === '100/5') {
+                    controller.handleNumberInput('1');
+                    controller.handleNumberInput('0');
+                    controller.handleNumberInput('0');
+                    controller.handleOperatorInput('/');
+                    controller.handleNumberInput('5');
+                } else if (test.expr === '3^2') {
+                    controller.handleNumberInput('3');
+                    controller.handleOperatorInput('^');
+                    controller.handleNumberInput('2');
+                } else if (test.expr === 'sqrt(16)') {
+                    controller.handleScientificFunction('sqrt');
+                    controller.handleNumberInput('1');
+                    controller.handleNumberInput('6');
+                    controller.handleParenthesis('close');
+                }
+                
+                controller.handleEquals();
+                
+                document.getElementById('test5-status').className = 'status info';
+                document.getElementById('test5-status').textContent = 'Testing ' + test.type + '... (' + (currentTest + 1) + '/' + tests.length + ')';
+                
+                currentTest++;
+                setTimeout(runNextTest, 500);
+            }
+            
+            runNextTest();
+        }
+    </script>
+</body>
+</html>

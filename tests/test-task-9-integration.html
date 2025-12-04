@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 9 Integration Test - Display Update Animation</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .test-info {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            max-width: 300px;
+            font-family: monospace;
+            font-size: 0.875rem;
+            z-index: 1000;
+        }
+        .test-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: #667eea;
+        }
+        .test-info p {
+            margin: 0.25rem 0;
+        }
+        .animation-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #10b981;
+            margin-left: 0.5rem;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .instructions {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(102, 126, 234, 0.9);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 500px;
+        }
+        .instructions h4 {
+            margin: 0 0 0.5rem 0;
+        }
+        .instructions p {
+            margin: 0.25rem 0;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h3>Task 9: Display Animation</h3>
+        <p>Status: <span id="status">Monitoring...</span></p>
+        <p>Animations: <span id="animation-count">0</span></p>
+        <p>Last Update: <span id="last-update">-</span></p>
+        <div id="animation-active" style="display: none;">
+            <p>Animating<span class="animation-indicator"></span></p>
+        </div>
+    </div>
+
+    <div class="instructions">
+        <h4>🎬 Test the Display Update Animation</h4>
+        <p>Click any number or perform calculations</p>
+        <p>Watch the display fade and slide when values change</p>
+        <p>Try: 2 + 3 = (or use keyboard)</p>
+    </div>
+
+    <div id="calculator-container"></div>
+
+    <script src="../src/number-formatter.js"></script>
+    <script src="../src/calculator-engine.js"></script>
+    <script src="../src/state-manager.js"></script>
+    <script src="../src/memory-manager.js"></script>
+    <script src="../src/expression-parser.js"></script>
+    <script src="../src/calculator-view.js"></script>
+    <script src="../src/calculator-controller.js"></script>
+
+    <script>
+        let animationCount = 0;
+        let view, controller;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize calculator
+            const engine = new CalculatorEngine();
+            const stateManager = new StateManager();
+            const memoryManager = new MemoryManager();
+            view = new CalculatorView('calculator-container');
+            controller = new CalculatorController(engine, stateManager, memoryManager, view);
+
+            view.render();
+
+            // Bind handlers
+            view.bindNumberButton((digit) => controller.handleNumberInput(digit));
+            view.bindOperatorButton((op) => controller.handleOperatorInput(op));
+            view.bindFunctionButton((fn) => controller.handleScientificFunction(fn));
+            view.bindControlButton((action) => {
+                switch (action) {
+                    case 'equals': controller.handleEquals(); break;
+                    case 'clear': controller.handleClear(); break;
+                    case 'all-clear': controller.handleAllClear(); break;
+                    case 'backspace': controller.handleBackspace(); break;
+                    case 'decimal': controller.handleDecimalPoint(); break;
+                    case 'negate': controller.handleNegate(); break;
+                    case 'angle-mode': controller.handleAngleModeToggle(); break;
+                    case 'open-paren': controller.handleParenthesis('open'); break;
+                    case 'close-paren': controller.handleParenthesis('close'); break;
+                    case 'memory-store': controller.handleMemoryStore(); break;
+                    case 'memory-recall': controller.handleMemoryRecall(); break;
+                    case 'memory-clear': controller.handleMemoryClear(); break;
+                    case 'memory-add': controller.handleMemoryAdd(); break;
+                }
+            });
+
+            controller.updateDisplay();
+
+            // Monitor for animation class changes
+            const mainDisplay = view.mainDisplay;
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const hasUpdatingClass = mainDisplay.classList.contains('updating');
+                        
+                        if (hasUpdatingClass) {
+                            animationCount++;
+                            document.getElementById('animation-count').textContent = animationCount;
+                            document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+                            document.getElementById('animation-active').style.display = 'block';
+                            document.getElementById('status').textContent = '✓ Working';
+                            document.getElementById('status').style.color = '#10b981';
+                            
+                            // Hide indicator after animation
+                            setTimeout(() => {
+                                document.getElementById('animation-active').style.display = 'none';
+                            }, 250);
+                        }
+                    }
+                });
+            });
+
+            observer.observe(mainDisplay, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+
+            // Also monitor text content changes
+            const textObserver = new MutationObserver(() => {
+                // Text changed, animation should have triggered
+            });
+
+            textObserver.observe(mainDisplay, {
+                characterData: true,
+                childList: true,
+                subtree: true
+            });
+
+            console.log('Task 9 Integration Test Ready');
+            console.log('Monitoring display for animation triggers...');
+        });
+    </script>
+</body>
+</html>

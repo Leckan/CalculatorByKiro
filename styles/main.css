@@ -1,0 +1,194 @@
+/* 
+ * Calculator UI Redesign - Main Stylesheet
+ * Modular CSS Architecture
+ */
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+@import './base/reset.css';
+@import './base/variables.css';
+@import './base/typography.css';
+
+/* ========================================
+   COMPONENTS
+   ======================================== */
+@import './components/calculator.css';
+@import './components/display.css';
+@import './components/buttons.css';
+@import './components/indicators.css';
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@import './animations/entrance.css';
+@import './animations/interactions.css';
+@import './animations/transitions.css';
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@import './responsive/breakpoints.css';
+
+/* ========================================
+   GLOBAL LAYOUT
+   ======================================== */
+
+/* Gradient Background Animation */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+body {
+    /* Fallback solid color for older browsers */
+    background-color: var(--color-background);
+    
+    /* Animated gradient background */
+    background: var(--gradient-bg);
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+    
+    /* Layout */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-5);
+}
+
+#calculator-container {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+/* Reduced Motion Support - Task 16: Requirements 1.5
+   
+   This implementation respects user preferences for reduced motion while
+   maintaining essential functionality and feedback. The approach:
+   
+   1. Disables decorative animations (entrance, stagger, gradient)
+   2. Reduces duration of essential feedback animations
+   3. Maintains functionality - all interactions still work
+   4. Keeps instant transitions for state changes
+   
+   Essential animations (button press, error feedback) are reduced but not
+   eliminated, as they provide important usability feedback.
+*/
+@media (prefers-reduced-motion: reduce) {
+    /* Disable decorative background gradient animation */
+    body {
+        animation: none;
+        background: var(--color-background);
+    }
+    
+    /* Disable entrance animations for calculator and buttons */
+    .calculator,
+    .calc-button {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+    
+    /* Remove staggered entrance delays */
+    .calc-button:nth-child(n) {
+        animation-delay: 0ms;
+    }
+    
+    /* Reduce transition durations for essential feedback
+       Keep them very short but not instant for usability */
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.05s !important;
+        animation-duration: 0.05s !important;
+    }
+    
+    /* Disable infinite animations (memory pulse, gradient) */
+    .memory.active,
+    body {
+        animation-iteration-count: 1 !important;
+    }
+    
+    /* Disable hover lift effects - keep color changes only */
+    .calc-button:hover:not(:disabled) {
+        transform: none;
+    }
+    
+    /* Disable active scale effects */
+    .calc-button:active:not(:disabled) {
+        transform: none;
+    }
+    
+    /* Disable indicator scale effects but keep color changes */
+    .angle-mode.active,
+    .parenthesis.active {
+        transform: none;
+    }
+    
+    /* Disable display update animations */
+    .main-display.updating,
+    .main-display.result-highlight,
+    .main-display.result-fade-in {
+        animation: none;
+    }
+    
+    /* Reduce error shake to minimal movement */
+    @keyframes errorShake {
+        0%, 100% {
+            transform: translateX(0);
+        }
+        50% {
+            transform: translateX(-2px);
+        }
+    }
+    
+    /* Keep error visual feedback but reduce animation */
+    .display-area.error {
+        animation-duration: 0.2s;
+    }
+    
+    /* Disable button press animation but keep instant feedback */
+    .calc-button.pressed {
+        animation: none;
+    }
+    
+    /* Disable equals button calculation animation */
+    .equals-button.calculating {
+        animation: none;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .calculator {
+        border: 2px solid var(--color-text-primary);
+    }
+    
+    .calc-button {
+        border: 1px solid var(--color-text-primary);
+    }
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+    }
+    
+    .calculator {
+        box-shadow: none;
+        border: 1px solid black;
+    }
+}

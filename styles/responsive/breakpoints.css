@@ -1,0 +1,295 @@
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   Task 15: Create responsive layout with media queries
+   Requirements: 7.1, 7.2, 7.3, 7.4, 7.5
+   ======================================== */
+
+/* ========================================
+   MOBILE BREAKPOINT (< 640px)
+   Requirement 7.1: Scale appropriately and remain fully functional
+   ======================================== */
+@media (max-width: 639px) {
+    /* Adjust body padding for mobile */
+    body {
+        padding: var(--space-3);
+        align-items: flex-start;
+        padding-top: var(--space-6);
+    }
+    
+    /* Calculator container adjustments */
+    .calculator {
+        max-width: 100%;
+        padding: var(--space-4);
+        border-radius: var(--radius-lg); /* Slightly smaller radius */
+    }
+    
+    /* Display area adjustments */
+    .display-area {
+        padding: var(--space-4);
+        margin-bottom: var(--space-4);
+    }
+    
+    /* Adjust display font sizes for mobile */
+    .secondary-display {
+        font-size: var(--text-base); /* 16px - down from 18px */
+        min-height: 1.25rem;
+    }
+    
+    .main-display {
+        font-size: var(--text-3xl); /* 30px - down from 36px */
+        min-height: 2.5rem;
+    }
+    
+    /* Button adjustments - Requirements 7.4 */
+    .calc-button {
+        min-height: 50px; /* Down from 60px */
+        font-size: var(--text-base); /* 16px - down from 18px */
+        padding: var(--space-3);
+        border-radius: 10px; /* Slightly smaller radius */
+    }
+    
+    /* Adjust button grid spacing */
+    .button-grid {
+        gap: var(--space-2); /* Tighter spacing on mobile */
+    }
+    
+    .button-row {
+        gap: var(--space-2);
+    }
+    
+    /* Indicator adjustments */
+    .indicator {
+        font-size: var(--text-xs); /* 12px - down from 14px */
+        padding: var(--space-1) var(--space-2);
+    }
+    
+    .indicators-row {
+        margin-top: var(--space-3);
+        padding-top: var(--space-2);
+    }
+    
+    /* Ensure calculator container fits viewport */
+    #calculator-container {
+        max-width: 100%;
+    }
+}
+
+/* ========================================
+   TABLET BREAKPOINT (640px - 1024px)
+   Requirement 7.2: Optimize layout for available screen space
+   ======================================== */
+@media (min-width: 640px) and (max-width: 1023px) {
+    /* Adjust body padding for tablet */
+    body {
+        padding: var(--space-5);
+    }
+    
+    /* Calculator container optimized for tablet */
+    .calculator {
+        max-width: 480px;
+        padding: var(--space-5);
+    }
+    
+    /* Display area adjustments */
+    .display-area {
+        padding: var(--space-5);
+        margin-bottom: var(--space-5);
+    }
+    
+    /* Slightly adjusted display font sizes for tablet */
+    .secondary-display {
+        font-size: var(--text-lg); /* 18px - maintain desktop size */
+    }
+    
+    .main-display {
+        font-size: var(--text-4xl); /* 36px - maintain desktop size */
+    }
+    
+    /* Button adjustments - Requirements 7.4 */
+    .calc-button {
+        min-height: 56px; /* Slightly smaller than desktop */
+        font-size: var(--text-lg); /* 18px - maintain desktop size */
+    }
+    
+    /* Maintain standard button grid spacing */
+    .button-grid {
+        gap: var(--space-3);
+    }
+    
+    .button-row {
+        gap: var(--space-3);
+    }
+    
+    /* Calculator container sizing */
+    #calculator-container {
+        max-width: 480px;
+    }
+}
+
+/* ========================================
+   DESKTOP BREAKPOINT (>= 1024px)
+   Requirement 7.3: Center calculator and use appropriate sizing
+   ======================================== */
+@media (min-width: 1024px) {
+    /* Desktop layout - calculator is centered via flexbox in main.css body styles */
+    body {
+        /* Centering is already handled by:
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           min-height: 100vh;
+        */
+        padding: var(--space-5);
+    }
+    
+    /* Calculator container at optimal desktop size */
+    .calculator {
+        max-width: 420px;
+        padding: var(--space-6);
+    }
+    
+    /* Display area with full padding */
+    .display-area {
+        padding: var(--space-6);
+        margin-bottom: var(--space-6);
+    }
+    
+    /* Full desktop font sizes */
+    .secondary-display {
+        font-size: var(--text-lg); /* 18px */
+    }
+    
+    .main-display {
+        font-size: var(--text-4xl); /* 36px */
+    }
+    
+    /* Full desktop button sizing - Requirements 7.4 */
+    .calc-button {
+        min-height: 60px;
+        font-size: var(--text-lg); /* 18px */
+    }
+    
+    /* Standard button grid spacing */
+    .button-grid {
+        gap: var(--space-3);
+    }
+    
+    .button-row {
+        gap: var(--space-3);
+    }
+    
+    /* Calculator container sizing */
+    #calculator-container {
+        max-width: 420px;
+    }
+    
+    /* Enhanced hover effects on desktop (more precise pointer) */
+    .calc-button:hover:not(:disabled) {
+        transform: translateY(-3px); /* Slightly more pronounced */
+    }
+}
+
+/* ========================================
+   EXTRA LARGE SCREENS (>= 1440px)
+   Optional enhancement for very large displays
+   ======================================== */
+@media (min-width: 1440px) {
+    /* Maintain desktop sizing - calculator doesn't grow beyond 420px */
+    .calculator {
+        max-width: 420px;
+    }
+}
+
+/* ========================================
+   LANDSCAPE MOBILE (< 640px height in landscape)
+   Special handling for mobile landscape orientation
+   ======================================== */
+@media (max-height: 640px) and (orientation: landscape) {
+    body {
+        padding: var(--space-2);
+        align-items: flex-start;
+        padding-top: var(--space-3);
+    }
+    
+    .calculator {
+        padding: var(--space-3);
+    }
+    
+    .display-area {
+        padding: var(--space-3);
+        margin-bottom: var(--space-3);
+    }
+    
+    .calc-button {
+        min-height: 44px; /* Minimum touch target size */
+        padding: var(--space-2);
+    }
+    
+    .button-grid {
+        gap: var(--space-2);
+    }
+    
+    .button-row {
+        gap: var(--space-2);
+    }
+}
+
+/* ========================================
+   RESPONSIVE TYPOGRAPHY SCALING
+   Ensure text remains readable at all sizes
+   Requirements: 7.4, 7.5
+   ======================================== */
+
+/* Prevent text from becoming too small on very small screens */
+@media (max-width: 360px) {
+    .main-display {
+        font-size: var(--text-2xl); /* 24px minimum */
+    }
+    
+    .secondary-display {
+        font-size: var(--text-sm); /* 14px minimum */
+    }
+    
+    .calc-button {
+        font-size: var(--text-sm); /* 14px minimum */
+        min-height: 48px;
+    }
+}
+
+/* ========================================
+   MAINTAIN FUNCTIONALITY ACROSS ALL SIZES
+   Requirement 7.5: Calculator remains functional at all sizes
+   ======================================== */
+
+/* Ensure buttons maintain minimum touch target size (44x44px) */
+.calc-button {
+    min-width: 44px;
+    min-height: 44px;
+}
+
+/* Ensure display text doesn't overflow */
+.main-display,
+.secondary-display {
+    word-break: break-all;
+    overflow-wrap: break-word;
+}
+
+/* Ensure calculator doesn't exceed viewport width */
+.calculator {
+    max-width: 100vw;
+    box-sizing: border-box;
+}
+
+/* Ensure all interactive elements are accessible on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    /* Touch device optimizations */
+    .calc-button {
+        min-height: 52px; /* Slightly larger for touch */
+    }
+    
+    /* Remove hover effects on touch devices */
+    .calc-button:hover:not(:disabled) {
+        transform: none;
+        box-shadow: var(--shadow-md);
+    }
+}

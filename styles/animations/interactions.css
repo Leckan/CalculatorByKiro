@@ -1,0 +1,57 @@
+/* ========================================
+   INTERACTION ANIMATIONS
+   ======================================== */
+
+/* ========================================
+   BUTTON PRESS ANIMATION
+   Task 8: Button press animation with scale effect
+   Requirements: 2.1, 2.5
+   ======================================== */
+
+/* Button press keyframe animation - Scale effect for tactile feedback
+   Requirements: 2.1 */
+@keyframes buttonPress {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Apply animation when button has 'pressed' class
+   Requirements: 2.1, 2.5 */
+.calc-button.pressed {
+    animation: buttonPress var(--duration-fast) var(--easing-standard);
+}
+
+/* ========================================
+   ERROR SHAKE ANIMATION
+   Task 10: Error shake animation with horizontal movement
+   Requirements: 2.4
+   ======================================== */
+
+/* Error shake keyframe animation - Horizontal shake for error feedback
+   Requirements: 2.4 */
+@keyframes errorShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-4px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(4px);
+    }
+}
+
+/* Apply animation when display area has 'error' class
+   Requirements: 2.4 */
+.display-area.error {
+    animation: errorShake 500ms var(--easing-standard);
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}

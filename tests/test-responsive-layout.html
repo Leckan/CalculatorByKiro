@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Layout Test - Calculator UI</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        /* Test controls styling */
+        .test-controls {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 1000;
+            max-width: 250px;
+        }
+        
+        .test-controls h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+        }
+        
+        .test-controls button {
+            display: block;
+            width: 100%;
+            margin: 5px 0;
+            padding: 8px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        
+        .test-controls button:hover {
+            background: #5568d3;
+        }
+        
+        .viewport-info {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .viewport-info div {
+            margin: 3px 0;
+        }
+        
+        /* Viewport size simulator */
+        body.simulate-mobile {
+            max-width: 375px;
+            margin: 0 auto;
+            border-left: 2px solid red;
+            border-right: 2px solid red;
+        }
+        
+        body.simulate-tablet {
+            max-width: 768px;
+            margin: 0 auto;
+            border-left: 2px solid orange;
+            border-right: 2px solid orange;
+        }
+        
+        body.simulate-desktop {
+            max-width: 1440px;
+            margin: 0 auto;
+            border-left: 2px solid green;
+            border-right: 2px solid green;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-controls">
+        <h3>Responsive Test</h3>
+        <button onclick="simulateViewport('mobile')">Mobile (375px)</button>
+        <button onclick="simulateViewport('tablet')">Tablet (768px)</button>
+        <button onclick="simulateViewport('desktop')">Desktop (1440px)</button>
+        <button onclick="simulateViewport('reset')">Reset (Full Width)</button>
+        
+        <div class="viewport-info">
+            <div>Width: <span id="viewport-width">-</span>px</div>
+            <div>Height: <span id="viewport-height">-</span>px</div>
+            <div>Breakpoint: <span id="breakpoint">-</span></div>
+        </div>
+    </div>
+
+    <div id="calculator-container">
+        <!-- Calculator will be rendered here by JavaScript -->
+    </div>
+    
+    <!-- Load calculator modules -->
+    <script src="../src/number-formatter.js"></script>
+    <script src="../src/calculator-engine.js"></script>
+    <script src="../src/state-manager.js"></script>
+    <script src="../src/memory-manager.js"></script>
+    <script src="../src/expression-parser.js"></script>
+    <script src="../src/calculator-view.js"></script>
+    <script src="../src/calculator-controller.js"></script>
+    <script src="../main.js"></script>
+    
+    <script>
+        // Viewport simulation functions
+        function simulateViewport(size) {
+            document.body.classList.remove('simulate-mobile', 'simulate-tablet', 'simulate-desktop');
+            
+            if (size !== 'reset') {
+                document.body.classList.add('simulate-' + size);
+            }
+            
+            updateViewportInfo();
+        }
+        
+        function updateViewportInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            document.getElementById('viewport-width').textContent = width;
+            document.getElementById('viewport-height').textContent = height;
+            
+            let breakpoint = 'Unknown';
+            if (width < 640) {
+                breakpoint = 'Mobile (< 640px)';
+            } else if (width >= 640 && width < 1024) {
+                breakpoint = 'Tablet (640px - 1024px)';
+            } else {
+                breakpoint = 'Desktop (>= 1024px)';
+            }
+            
+            document.getElementById('breakpoint').textContent = breakpoint;
+        }
+        
+        // Update viewport info on load and resize
+        window.addEventListener('load', updateViewportInfo);
+        window.addEventListener('resize', updateViewportInfo);
+        
+        // Log responsive behavior
+        console.log('Responsive Layout Test Loaded');
+        console.log('Test the calculator at different viewport sizes:');
+        console.log('- Mobile: < 640px');
+        console.log('- Tablet: 640px - 1024px');
+        console.log('- Desktop: >= 1024px');
+        console.log('Use the buttons in the top-right to simulate different viewport sizes.');
+    </script>
+</body>
+</html>

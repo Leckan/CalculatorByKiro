@@ -1,0 +1,95 @@
+/* State Transitions */
+/* Task 9: Display Update Animation - Requirements 2.3, 9.3 */
+
+/* Display Update Animation - fade and slide effect */
+@keyframes displayUpdate {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateY(-4px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply animation when display is updating */
+.main-display.updating {
+    animation: displayUpdate var(--duration-normal) var(--easing-standard);
+}
+
+/* ========================================
+   CALCULATION COMPLETION FEEDBACK
+   Task 14: Calculation completion feedback animations
+   Requirements: 9.1, 9.2, 9.4, 9.5
+   ======================================== */
+
+/* Result highlight animation - Brief highlight on calculation completion
+   Requirements: 9.1, 9.4 */
+@keyframes resultHighlight {
+    0% {
+        background: transparent;
+        transform: scale(1);
+    }
+    50% {
+        background: rgba(102, 126, 234, 0.15);
+        transform: scale(1.02);
+    }
+    100% {
+        background: transparent;
+        transform: scale(1);
+    }
+}
+
+/* Apply highlight animation when calculation completes
+   Requirements: 9.1, 9.4 */
+.main-display.result-highlight {
+    animation: resultHighlight var(--duration-normal) var(--easing-standard);
+}
+
+/* Equals button feedback animation - Visual feedback on equals press
+   Requirements: 9.2, 9.4 */
+@keyframes equalsPress {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        transform: scale(0.92);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 
+                    0 0 20px rgba(102, 126, 234, 0.4);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Apply animation when equals button is pressed
+   Requirements: 9.2, 9.4 */
+.equals-button.calculating {
+    animation: equalsPress var(--duration-normal) var(--easing-standard);
+}
+
+/* Long calculation fade-in - Fade-in effect for calculation results
+   Requirements: 9.3, 9.4 */
+@keyframes resultFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply fade-in animation for calculation results
+   Requirements: 9.3, 9.4 */
+.main-display.result-fade-in {
+    animation: resultFadeIn var(--duration-normal) var(--easing-decelerate);
+}

@@ -1,0 +1,204 @@
+/* ========================================
+   BASE BUTTON STYLES
+   Task 5: Modern button design with rounded corners,
+   proper padding, shadows, and typography
+   Requirements: 1.2, 1.4
+   ======================================== */
+
+/* Base button styling for all calculator buttons */
+.calc-button {
+    /* Remove default button styles */
+    border: none;
+    outline: none;
+    background: none;
+    
+    /* Typography - Requirements 1.2 */
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    
+    /* Layout - Requirements 1.2 */
+    padding: var(--space-4);
+    min-height: 60px;
+    
+    /* Visual design - Requirements 1.2 */
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    
+    /* Interaction */
+    cursor: pointer;
+    user-select: none;
+    
+    /* Transitions - Task 7: Requirements 2.2, 2.5 */
+    transition: all var(--duration-fast) var(--easing-standard);
+    
+    /* Ensure text is centered */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    /* Task 13: Staggered entrance animation - Requirements 10.2, 10.3
+       - Uses buttonStagger keyframe animation
+       - Duration: 600ms with decelerate easing
+       - Fills both forwards and backwards to maintain final state
+       - Delays are applied per button using nth-child selectors below */
+    animation: buttonStagger var(--duration-entrance) var(--easing-decelerate);
+    animation-fill-mode: both;
+}
+
+/* ========================================
+   BUTTON HOVER AND ACTIVE STATE ANIMATIONS
+   Task 7: Smooth hover and active state animations
+   Requirements: 2.2, 2.5
+   ======================================== */
+
+/* Hover state - Smooth lift effect with enhanced shadow
+   Requirements: 2.2 */
+.calc-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Active state - Scale down effect for press feedback
+   Requirements: 2.2 */
+.calc-button:active:not(:disabled) {
+    transform: scale(0.95);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Button grid layout - Requirements 1.4 */
+.button-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.button-row {
+    display: flex;
+    gap: var(--space-3);
+    width: 100%;
+}
+
+.button-row .calc-button {
+    flex: 1;
+    min-width: 0; /* Allow buttons to shrink below content size */
+}
+
+/* Button spacers for empty grid cells */
+.button-spacer {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Ensure consistent spacing in grid - Requirements 1.4 */
+.calc-button + .calc-button {
+    /* Gap is handled by flexbox gap property */
+}
+
+/* Focus state for accessibility */
+.calc-button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Disabled state */
+.calc-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ========================================
+   BUTTON COLOR SCHEMES BY TYPE
+   Task 6: Distinct colors for different button types
+   Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 1.5
+   ======================================== */
+
+/* Number buttons - Dark slate background
+   Requirements: 4.1 */
+.number-button {
+    background: var(--color-number);
+    color: var(--color-text-primary);
+}
+
+/* Operator buttons - Primary purple color
+   Requirements: 4.2 */
+.operator-button {
+    background: var(--color-operator);
+    color: white;
+}
+
+/* Function buttons - Secondary violet color
+   Requirements: 4.3 */
+.function-button {
+    background: var(--color-function);
+    color: white;
+}
+
+/* Control buttons - Accent red color
+   Requirements: 4.4 */
+.control-button {
+    background: var(--color-control);
+    color: white;
+}
+
+/* Special button: Equals - Success green color
+   Requirements: 4.5 */
+.equals-button {
+    background: var(--color-equals);
+    color: white;
+}
+
+/* Ensure all button colors meet contrast requirements
+   Requirements: 1.5, 4.5
+   All color combinations provide at least 4.5:1 contrast ratio (WCAG AA):
+   - Dark slate (#1e293b) with white text: 13.98:1 (AAA)
+   - Dark purple (#5b21b6) with white text: 8.98:1 (AAA)
+   - Dark violet (#6d28d9) with white text: 7.10:1 (AAA)
+   - Dark red (#dc2626) with white text: 4.83:1 (AA)
+   - Dark green (#047857) with white text: 5.48:1 (AA)
+   */
+
+/* ========================================
+   STAGGERED ENTRANCE ANIMATION DELAYS
+   Task 13: Requirements 10.2, 10.3
+   30ms stagger increment per button
+   Total stagger time capped at 800ms
+   ======================================== */
+
+/* Apply staggered animation delays to each button
+   Using nth-child selectors for delay calculation
+   Stagger increment: 30ms per button
+   Maximum delay: 780ms (26 buttons × 30ms) to fit within 800ms total */
+
+.calc-button:nth-child(1) { animation-delay: 0ms; }
+.calc-button:nth-child(2) { animation-delay: 30ms; }
+.calc-button:nth-child(3) { animation-delay: 60ms; }
+.calc-button:nth-child(4) { animation-delay: 90ms; }
+.calc-button:nth-child(5) { animation-delay: 120ms; }
+.calc-button:nth-child(6) { animation-delay: 150ms; }
+.calc-button:nth-child(7) { animation-delay: 180ms; }
+.calc-button:nth-child(8) { animation-delay: 210ms; }
+.calc-button:nth-child(9) { animation-delay: 240ms; }
+.calc-button:nth-child(10) { animation-delay: 270ms; }
+.calc-button:nth-child(11) { animation-delay: 300ms; }
+.calc-button:nth-child(12) { animation-delay: 330ms; }
+.calc-button:nth-child(13) { animation-delay: 360ms; }
+.calc-button:nth-child(14) { animation-delay: 390ms; }
+.calc-button:nth-child(15) { animation-delay: 420ms; }
+.calc-button:nth-child(16) { animation-delay: 450ms; }
+.calc-button:nth-child(17) { animation-delay: 480ms; }
+.calc-button:nth-child(18) { animation-delay: 510ms; }
+.calc-button:nth-child(19) { animation-delay: 540ms; }
+.calc-button:nth-child(20) { animation-delay: 570ms; }
+.calc-button:nth-child(21) { animation-delay: 600ms; }
+.calc-button:nth-child(22) { animation-delay: 630ms; }
+.calc-button:nth-child(23) { animation-delay: 660ms; }
+.calc-button:nth-child(24) { animation-delay: 690ms; }
+.calc-button:nth-child(25) { animation-delay: 720ms; }
+.calc-button:nth-child(26) { animation-delay: 750ms; }
+
+/* Cap remaining buttons at 780ms to ensure total stagger fits within 800ms */
+.calc-button:nth-child(n+27) { animation-delay: 780ms; }

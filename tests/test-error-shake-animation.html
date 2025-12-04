@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Shake Animation Test - Task 10</title>
+    
+    <!-- Import all CSS files -->
+    <link rel="stylesheet" href="../styles/base/reset.css">
+    <link rel="stylesheet" href="../styles/base/variables.css">
+    <link rel="stylesheet" href="../styles/base/typography.css">
+    <link rel="stylesheet" href="../styles/components/calculator.css">
+    <link rel="stylesheet" href="../styles/components/display.css">
+    <link rel="stylesheet" href="../styles/components/buttons.css">
+    <link rel="stylesheet" href="../styles/components/indicators.css">
+    <link rel="stylesheet" href="../styles/animations/entrance.css">
+    <link rel="stylesheet" href="../styles/animations/interactions.css">
+    <link rel="stylesheet" href="../styles/animations/transitions.css">
+    <link rel="stylesheet" href="../styles/responsive/breakpoints.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    
+    <style>
+        body {
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .test-controls {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .test-controls h1 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .test-controls p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+        }
+        
+        .test-button {
+            background: #5b21b6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 150ms ease;
+        }
+        
+        .test-button:hover {
+            background: #6d28d9;
+            transform: translateY(-2px);
+        }
+        
+        .test-button:active {
+            transform: scale(0.95);
+        }
+        
+        #test-results {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            color: white;
+            max-width: 600px;
+        }
+        
+        .test-result {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .test-result.pass {
+            background: rgba(16, 185, 129, 0.2);
+            border-left: 4px solid #10b981;
+        }
+        
+        .test-result.fail {
+            background: rgba(239, 68, 68, 0.2);
+            border-left: 4px solid #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-controls">
+        <h1>Error Shake Animation Test - Task 10</h1>
+        <p>Testing Requirements 2.4: Error shake animation with horizontal movement</p>
+        <button class="test-button" onclick="triggerError()">Trigger Error Animation</button>
+        <button class="test-button" onclick="runAutomatedTests()">Run Automated Tests</button>
+    </div>
+    
+    <div id="calculator-container"></div>
+    
+    <div id="test-results"></div>
+    
+    <!-- Import calculator modules -->
+    <script src="../src/calculator-engine.js"></script>
+    <script src="../src/calculator-view.js"></script>
+    <script src="../src/calculator-controller.js"></script>
+    <script src="../src/state-manager.js"></script>
+    <script src="../src/memory-manager.js"></script>
+    <script src="../src/expression-parser.js"></script>
+    <script src="../src/number-formatter.js"></script>
+    
+    <script>
+        // Initialize calculator
+        let view, controller;
+        
+        function initCalculator() {
+            view = new CalculatorView('calculator-container');
+            view.render();
+            
+            const engine = new CalculatorEngine();
+            const stateManager = new StateManager();
+            const memoryManager = new MemoryManager();
+            const parser = new ExpressionParser();
+            const formatter = new NumberFormatter();
+            
+            controller = new CalculatorController(view, engine, stateManager, memoryManager, parser, formatter);
+        }
+        
+        // Trigger error manually
+        function triggerError() {
+            if (view) {
+                view.showError('Division by zero');
+            }
+        }
+        
+        // Automated tests
+        function runAutomatedTests() {
+            const results = [];
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = '<h2>Test Results</h2>';
+            
+            // Test 1: Error class is added to display area
+            const displayArea = document.querySelector('.display-area');
+            view.showError('Test error');
+            
+            setTimeout(() => {
+                const hasErrorClass = displayArea.classList.contains('error');
+                results.push({
+                    name: 'Error class added to display area',
+                    pass: hasErrorClass,
+                    message: hasErrorClass ? 'PASS: Error class added' : 'FAIL: Error class not added'
+                });
+                
+                // Test 2: Error class is removed after 500ms
+                setTimeout(() => {
+                    const errorClassRemoved = !displayArea.classList.contains('error');
+                    results.push({
+                        name: 'Error class removed after animation',
+                        pass: errorClassRemoved,
+                        message: errorClassRemoved ? 'PASS: Error class removed after 500ms' : 'FAIL: Error class still present'
+                    });
+                    
+                    // Test 3: Check if animation is defined
+                    const styles = window.getComputedStyle(displayArea);
+                    displayArea.classList.add('error');
+                    const animationName = window.getComputedStyle(displayArea).animationName;
+                    const hasAnimation = animationName && animationName !== 'none';
+                    displayArea.classList.remove('error');
+                    
+                    results.push({
+                        name: 'Error shake animation defined',
+                        pass: hasAnimation,
+                        message: hasAnimation ? `PASS: Animation "${animationName}" is defined` : 'FAIL: No animation defined'
+                    });
+                    
+                    // Test 4: Check animation duration
+                    displayArea.classList.add('error');
+                    const animationDuration = window.getComputedStyle(displayArea).animationDuration;
+                    const duration = parseFloat(animationDuration) * 1000; // Convert to ms
+                    const correctDuration = duration === 500;
+                    displayArea.classList.remove('error');
+                    
+                    results.push({
+                        name: 'Animation duration is 500ms',
+                        pass: correctDuration,
+                        message: correctDuration ? 'PASS: Duration is 500ms' : `FAIL: Duration is ${duration}ms`
+                    });
+                    
+                    // Test 5: Check background color change
+                    displayArea.classList.add('error');
+                    const bgColor = window.getComputedStyle(displayArea).backgroundColor;
+                    const hasRedTint = bgColor.includes('239') || bgColor.includes('68'); // rgba(239, 68, 68, 0.1)
+                    displayArea.classList.remove('error');
+                    
+                    results.push({
+                        name: 'Display has red tint on error',
+                        pass: hasRedTint,
+                        message: hasRedTint ? 'PASS: Red tint applied' : `FAIL: Background is ${bgColor}`
+                    });
+                    
+                    // Display results
+                    displayResults(results);
+                }, 600); // Wait for animation to complete + buffer
+            }, 50); // Small delay to ensure class is added
+        }
+        
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = '<h2>Test Results</h2>';
+            
+            results.forEach(result => {
+                const div = document.createElement('div');
+                div.className = `test-result ${result.pass ? 'pass' : 'fail'}`;
+                div.textContent = result.message;
+                resultsDiv.appendChild(div);
+            });
+            
+            const summary = document.createElement('div');
+            summary.style.marginTop = '1rem';
+            summary.style.fontWeight = 'bold';
+            const passed = results.filter(r => r.pass).length;
+            const total = results.length;
+            summary.textContent = `Summary: ${passed}/${total} tests passed`;
+            resultsDiv.appendChild(summary);
+        }
+        
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', initCalculator);
+    </script>
+</body>
+</html>

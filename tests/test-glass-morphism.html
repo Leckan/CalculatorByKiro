@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glass-morphism Effect Test</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        /* Test-specific styles */
+        .test-container {
+            padding: 2rem;
+        }
+        
+        .test-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            color: white;
+            font-family: var(--font-display);
+        }
+        
+        .test-info h2 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.5rem;
+        }
+        
+        .test-info ul {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .test-calculator {
+            /* Minimal calculator structure for testing */
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-xl);
+            max-width: 420px;
+            width: 100%;
+            padding: var(--space-6);
+            margin: 0 auto;
+            color: white;
+            font-family: var(--font-display);
+        }
+        
+        .test-content {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .test-content h3 {
+            margin: 0 0 1rem 0;
+        }
+        
+        .test-content p {
+            margin: 0.5rem 0;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-info">
+            <h2>Glass-morphism Effect Test</h2>
+            <p>This page tests the calculator container glass-morphism styling (Task 3).</p>
+            <p><strong>Requirements being tested:</strong></p>
+            <ul>
+                <li>8.1: Semi-transparent background with backdrop-filter blur</li>
+                <li>8.2: Backdrop blur effects for depth</li>
+                <li>8.3: Subtle borders to define boundaries</li>
+                <li>8.4: Soft shadows for elevation</li>
+                <li>8.5: Glass effect maintains readability</li>
+            </ul>
+            <p><strong>Expected visual effects:</strong></p>
+            <ul>
+                <li>✓ Semi-transparent white background (5% opacity)</li>
+                <li>✓ Blurred background visible through container</li>
+                <li>✓ 24px rounded corners</li>
+                <li>✓ Subtle white border (10% opacity)</li>
+                <li>✓ Soft shadow creating elevation</li>
+                <li>✓ Content remains readable</li>
+            </ul>
+        </div>
+        
+        <div class="test-calculator">
+            <div class="test-content">
+                <h3>Glass-morphism Container</h3>
+                <p>This container demonstrates the glass effect.</p>
+                <p>The gradient background should be visible through the blur.</p>
+                <p>Text should remain clearly readable.</p>
+                <p>Border and shadow should create depth.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

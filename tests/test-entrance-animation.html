@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test: Calculator Entrance Animation</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            font-family: var(--font-display);
+            color: var(--color-text-primary);
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+        
+        .test-title {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-4);
+        }
+        
+        .test-description {
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-4);
+        }
+        
+        .test-result {
+            padding: var(--space-4);
+            border-radius: var(--radius-md);
+            margin-top: var(--space-4);
+            font-weight: var(--font-semibold);
+        }
+        
+        .test-result.pass {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--color-success);
+        }
+        
+        .test-result.fail {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--color-error);
+        }
+        
+        .reload-button {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-md);
+            font-size: var(--text-base);
+            font-weight: var(--font-semibold);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+        }
+        
+        .reload-button:hover {
+            background: var(--color-primary-light);
+            transform: translateY(-2px);
+        }
+        
+        .reload-button:active {
+            transform: scale(0.95);
+        }
+        
+        .test-info {
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 4px solid var(--color-primary);
+            padding: var(--space-4);
+            margin: var(--space-4) 0;
+            border-radius: var(--radius-sm);
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-2) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            color: var(--color-text-secondary);
+        }
+        
+        .metric-value {
+            font-weight: var(--font-semibold);
+            color: var(--color-text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-section">
+            <h1 class="test-title">Calculator Entrance Animation Test</h1>
+            <p class="test-description">
+                Testing Task 12: Create calculator entrance animation
+            </p>
+            
+            <div class="test-info">
+                <strong>Requirements:</strong>
+                <ul>
+                    <li>10.1: Entrance animation with fade and scale effect</li>
+                    <li>10.3: Animation completes within 800ms (600ms for calculator)</li>
+                    <li>10.4: Entrance animation does not delay functionality</li>
+                    <li>10.5: Calculator is interactive during animation</li>
+                </ul>
+            </div>
+            
+            <button class="reload-button" onclick="location.reload()">
+                Reload Page to See Animation
+            </button>
+        </div>
+        
+        <div id="calculator-container"></div>
+        
+        <div class="test-section">
+            <h2 class="test-title">Test Results</h2>
+            <div id="test-results"></div>
+        </div>
+    </div>
+    
+    <script src="../src/number-formatter.js"></script>
+    <script src="../src/calculator-engine.js"></script>
+    <script src="../src/state-manager.js"></script>
+    <script src="../src/memory-manager.js"></script>
+    <script src="../src/expression-parser.js"></script>
+    <script src="../src/calculator-view.js"></script>
+    <script src="../src/calculator-controller.js"></script>
+    <script src="../main.js"></script>
+    
+    <script>
+        // Test the entrance animation
+        const results = [];
+        
+        // Test 1: Check if fadeInScale animation is defined
+        function testAnimationExists() {
+            const calculator = document.querySelector('.calculator');
+            if (!calculator) {
+                return { pass: false, message: 'Calculator element not found' };
+            }
+            
+            const computedStyle = window.getComputedStyle(calculator);
+            const animationName = computedStyle.animationName;
+            
+            if (animationName.includes('fadeInScale')) {
+                return { pass: true, message: 'fadeInScale animation is applied to calculator' };
+            } else {
+                return { pass: false, message: `Animation name is "${animationName}", expected "fadeInScale"` };
+            }
+        }
+        
+        // Test 2: Check animation duration is 600ms
+        function testAnimationDuration() {
+            const calculator = document.querySelector('.calculator');
+            if (!calculator) {
+                return { pass: false, message: 'Calculator element not found' };
+            }
+            
+            const computedStyle = window.getComputedStyle(calculator);
+            const duration = computedStyle.animationDuration;
+            
+            // Duration should be 0.6s or 600ms
+            if (duration === '0.6s' || duration === '600ms') {
+                return { pass: true, message: `Animation duration is ${duration} (600ms)` };
+            } else {
+                return { pass: false, message: `Animation duration is ${duration}, expected 600ms` };
+            }
+        }
+        
+        // Test 3: Check animation timing function (decelerate easing)
+        function testAnimationEasing() {
+            const calculator = document.querySelector('.calculator');
+            if (!calculator) {
+                return { pass: false, message: 'Calculator element not found' };
+            }
+            
+            const computedStyle = window.getComputedStyle(calculator);
+            const timingFunction = computedStyle.animationTimingFunction;
+            
+            // Decelerate easing is cubic-bezier(0.0, 0.0, 0.2, 1)
+            const expectedEasing = 'cubic-bezier(0, 0, 0.2, 1)';
+            
+            if (timingFunction === expectedEasing) {
+                return { pass: true, message: `Animation uses decelerate easing: ${timingFunction}` };
+            } else {
+                return { pass: false, message: `Animation timing is ${timingFunction}, expected ${expectedEasing}` };
+            }
+        }
+        
+        // Test 4: Check calculator is interactive during animation
+        function testInteractivityDuringAnimation() {
+            const calculator = document.querySelector('.calculator');
+            if (!calculator) {
+                return { pass: false, message: 'Calculator element not found' };
+            }
+            
+            const computedStyle = window.getComputedStyle(calculator);
+            const pointerEvents = computedStyle.pointerEvents;
+            
+            // Should not be 'none' - calculator should be interactive
+            if (pointerEvents !== 'none') {
+                return { pass: true, message: 'Calculator is interactive during animation (pointer-events: auto)' };
+            } else {
+                return { pass: false, message: 'Calculator is not interactive (pointer-events: none)' };
+            }
+        }
+        
+        // Test 5: Verify animation keyframes exist
+        function testKeyframesExist() {
+            const styleSheets = Array.from(document.styleSheets);
+            let keyframesFound = false;
+            
+            try {
+                for (const sheet of styleSheets) {
+                    try {
+                        const rules = Array.from(sheet.cssRules || []);
+                        for (const rule of rules) {
+                            if (rule.type === CSSRule.KEYFRAMES_RULE && rule.name === 'fadeInScale') {
+                                keyframesFound = true;
+                                break;
+                            }
+                        }
+                    } catch (e) {
+                        // Skip stylesheets we can't access (CORS)
+                        continue;
+                    }
+                    if (keyframesFound) break;
+                }
+            } catch (e) {
+                return { pass: false, message: `Error checking keyframes: ${e.message}` };
+            }
+            
+            if (keyframesFound) {
+                return { pass: true, message: '@keyframes fadeInScale is defined in CSS' };
+            } else {
+                return { pass: false, message: '@keyframes fadeInScale not found in stylesheets' };
+            }
+        }
+        
+        // Run tests after calculator is rendered
+        setTimeout(() => {
+            results.push({ name: 'Animation Applied', ...testAnimationExists() });
+            results.push({ name: 'Animation Duration (600ms)', ...testAnimationDuration() });
+            results.push({ name: 'Decelerate Easing', ...testAnimationEasing() });
+            results.push({ name: 'Interactive During Animation', ...testInteractivityDuringAnimation() });
+            results.push({ name: 'Keyframes Defined', ...testKeyframesExist() });
+            
+            // Display results
+            const resultsContainer = document.getElementById('test-results');
+            let html = '';
+            
+            results.forEach(result => {
+                const status = result.pass ? 'pass' : 'fail';
+                const icon = result.pass ? '✓' : '✗';
+                html += `
+                    <div class="test-result ${status}">
+                        ${icon} ${result.name}: ${result.message}
+                    </div>
+                `;
+            });
+            
+            // Add metrics
+            const passCount = results.filter(r => r.pass).length;
+            const totalCount = results.length;
+            
+            html += `
+                <div style="margin-top: var(--space-6);">
+                    <div class="metric">
+                        <span class="metric-label">Tests Passed:</span>
+                        <span class="metric-value">${passCount} / ${totalCount}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Success Rate:</span>
+                        <span class="metric-value">${Math.round((passCount / totalCount) * 100)}%</span>
+                    </div>
+                </div>
+            `;
+            
+            resultsContainer.innerHTML = html;
+        }, 100);
+    </script>
+</body>
+</html>

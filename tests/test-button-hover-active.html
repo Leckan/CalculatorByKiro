@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Hover and Active State Test - Task 7</title>
+    
+    <!-- Import all styles -->
+    <link rel="stylesheet" href="../styles/base/reset.css">
+    <link rel="stylesheet" href="../styles/base/variables.css">
+    <link rel="stylesheet" href="../styles/base/typography.css">
+    <link rel="stylesheet" href="../styles/components/buttons.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .test-section h2 {
+            color: white;
+            margin-bottom: 1rem;
+            font-family: var(--font-display);
+        }
+        
+        .test-section p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            font-family: var(--font-display);
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+        
+        .test-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+        }
+        
+        .test-info ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .test-info li {
+            margin-bottom: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-section">
+        <h2>Task 7: Button Hover and Active State Animations</h2>
+        <p>Test Requirements: 2.2, 2.5</p>
+        <div class="test-info">
+            <strong>Expected Behavior:</strong>
+            <ul>
+                <li>Hover: Button should lift up 2px with enhanced shadow</li>
+                <li>Active: Button should scale down to 0.95 with reduced shadow</li>
+                <li>Transition: All animations should complete in 150ms</li>
+                <li>Easing: Should use standard cubic-bezier easing</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Number Buttons</h2>
+        <p>Hover over and click these buttons to test hover and active states</p>
+        <div class="button-grid">
+            <button class="calc-button number-button">0</button>
+            <button class="calc-button number-button">1</button>
+            <button class="calc-button number-button">2</button>
+            <button class="calc-button number-button">3</button>
+            <button class="calc-button number-button">4</button>
+            <button class="calc-button number-button">5</button>
+            <button class="calc-button number-button">6</button>
+            <button class="calc-button number-button">7</button>
+            <button class="calc-button number-button">8</button>
+            <button class="calc-button number-button">9</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Operator Buttons</h2>
+        <p>Test hover and active states on operator buttons</p>
+        <div class="button-grid">
+            <button class="calc-button operator-button">+</button>
+            <button class="calc-button operator-button">−</button>
+            <button class="calc-button operator-button">×</button>
+            <button class="calc-button operator-button">÷</button>
+            <button class="calc-button operator-button">^</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Function Buttons</h2>
+        <p>Test hover and active states on function buttons</p>
+        <div class="button-grid">
+            <button class="calc-button function-button">sin</button>
+            <button class="calc-button function-button">cos</button>
+            <button class="calc-button function-button">tan</button>
+            <button class="calc-button function-button">log</button>
+            <button class="calc-button function-button">ln</button>
+            <button class="calc-button function-button">√</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Control Buttons</h2>
+        <p>Test hover and active states on control buttons</p>
+        <div class="button-grid">
+            <button class="calc-button control-button">AC</button>
+            <button class="calc-button control-button">C</button>
+            <button class="calc-button control-button">DEL</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Equals Button</h2>
+        <p>Test hover and active states on the equals button</p>
+        <div class="button-grid">
+            <button class="calc-button equals-button">=</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Disabled State</h2>
+        <p>Disabled buttons should not show hover or active effects</p>
+        <div class="button-grid">
+            <button class="calc-button number-button" disabled>Disabled</button>
+            <button class="calc-button operator-button" disabled>Disabled</button>
+            <button class="calc-button function-button" disabled>Disabled</button>
+        </div>
+    </div>
+
+    <script>
+        // Add console logging to verify animation timing
+        document.querySelectorAll('.calc-button').forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                console.log('Hover started:', button.textContent);
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                console.log('Hover ended:', button.textContent);
+            });
+            
+            button.addEventListener('mousedown', () => {
+                console.log('Active state:', button.textContent);
+            });
+            
+            button.addEventListener('mouseup', () => {
+                console.log('Active state ended:', button.textContent);
+            });
+        });
+    </script>
+</body>
+</html>

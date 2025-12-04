@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Styles Test - Task 5</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            padding: 2rem;
+        }
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        .test-section h2 {
+            color: var(--color-text-primary);
+            margin-bottom: 1rem;
+        }
+        .test-grid {
+            display: flex;
+            gap: var(--space-3);
+            flex-wrap: wrap;
+        }
+        .test-grid .calc-button {
+            min-width: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-section">
+        <h2>Task 5: Base Button Styles Verification</h2>
+        <p style="color: var(--color-text-secondary);">
+            Testing Requirements 1.2 and 1.4:
+        </p>
+        <ul style="color: var(--color-text-secondary);">
+            <li>✓ Rounded corners (12px)</li>
+            <li>✓ Proper padding and minimum height (60px)</li>
+            <li>✓ Soft shadows for depth</li>
+            <li>✓ Typography (font size, weight, family)</li>
+            <li>✓ Consistent spacing in grid</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>Sample Buttons</h2>
+        <div class="test-grid">
+            <button class="calc-button">7</button>
+            <button class="calc-button">8</button>
+            <button class="calc-button">9</button>
+            <button class="calc-button">÷</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Button Grid Layout Test</h2>
+        <div class="button-grid" style="max-width: 400px;">
+            <div class="button-row">
+                <button class="calc-button">MC</button>
+                <button class="calc-button">MR</button>
+                <button class="calc-button">M+</button>
+                <button class="calc-button">MS</button>
+            </div>
+            <div class="button-row">
+                <button class="calc-button">7</button>
+                <button class="calc-button">8</button>
+                <button class="calc-button">9</button>
+                <button class="calc-button">÷</button>
+            </div>
+            <div class="button-row">
+                <button class="calc-button">4</button>
+                <button class="calc-button">5</button>
+                <button class="calc-button">6</button>
+                <button class="calc-button">×</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Spacing Consistency Test</h2>
+        <p style="color: var(--color-text-secondary); margin-bottom: 1rem;">
+            All buttons should have consistent 12px (var(--space-3)) gaps between them.
+        </p>
+        <div class="button-row" style="max-width: 400px;">
+            <button class="calc-button">1</button>
+            <button class="calc-button">2</button>
+            <button class="calc-button">3</button>
+            <button class="calc-button">+</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Focus State Test</h2>
+        <p style="color: var(--color-text-secondary); margin-bottom: 1rem;">
+            Tab through buttons to see focus indicators (accessibility).
+        </p>
+        <div class="test-grid">
+            <button class="calc-button">Tab</button>
+            <button class="calc-button">To</button>
+            <button class="calc-button">Test</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Disabled State Test</h2>
+        <div class="test-grid">
+            <button class="calc-button">Enabled</button>
+            <button class="calc-button" disabled>Disabled</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Task 6: Button Color Schemes by Type</h2>
+        <p style="color: var(--color-text-secondary);">
+            Testing Requirements 4.1, 4.2, 4.3, 4.4, 4.5, 1.5:
+        </p>
+        <ul style="color: var(--color-text-secondary);">
+            <li>✓ Number buttons: Dark slate (#1e293b)</li>
+            <li>✓ Operator buttons: Primary purple (#667eea)</li>
+            <li>✓ Function buttons: Secondary violet (#8b5cf6)</li>
+            <li>✓ Control buttons: Accent red (#ef4444)</li>
+            <li>✓ All colors meet contrast requirements (≥4.5:1)</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>Number Buttons (Dark Slate)</h2>
+        <div class="test-grid">
+            <button class="calc-button number-button">0</button>
+            <button class="calc-button number-button">1</button>
+            <button class="calc-button number-button">2</button>
+            <button class="calc-button number-button">3</button>
+            <button class="calc-button number-button">4</button>
+            <button class="calc-button number-button">5</button>
+            <button class="calc-button number-button">6</button>
+            <button class="calc-button number-button">7</button>
+            <button class="calc-button number-button">8</button>
+            <button class="calc-button number-button">9</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Operator Buttons (Primary Purple)</h2>
+        <div class="test-grid">
+            <button class="calc-button operator-button">+</button>
+            <button class="calc-button operator-button">-</button>
+            <button class="calc-button operator-button">×</button>
+            <button class="calc-button operator-button">÷</button>
+            <button class="calc-button operator-button">^</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Function Buttons (Secondary Violet)</h2>
+        <div class="test-grid">
+            <button class="calc-button function-button">sin</button>
+            <button class="calc-button function-button">cos</button>
+            <button class="calc-button function-button">tan</button>
+            <button class="calc-button function-button">ln</button>
+            <button class="calc-button function-button">log</button>
+            <button class="calc-button function-button">√</button>
+            <button class="calc-button function-button">!</button>
+            <button class="calc-button function-button">e</button>
+            <button class="calc-button function-button">π</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Control Buttons (Accent Red)</h2>
+        <div class="test-grid">
+            <button class="calc-button control-button">AC</button>
+            <button class="calc-button control-button">C</button>
+            <button class="calc-button control-button">⌫</button>
+            <button class="calc-button control-button">MC</button>
+            <button class="calc-button control-button">MR</button>
+            <button class="calc-button control-button">M+</button>
+            <button class="calc-button control-button">MS</button>
+            <button class="calc-button control-button">(</button>
+            <button class="calc-button control-button">)</button>
+            <button class="calc-button control-button">.</button>
+            <button class="calc-button control-button">±</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Special Button: Equals (Success Green)</h2>
+        <div class="test-grid">
+            <button class="calc-button control-button equals-button">=</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Mixed Button Types (Visual Distinction Test)</h2>
+        <p style="color: var(--color-text-secondary); margin-bottom: 1rem;">
+            All button types should be visually distinct from each other.
+        </p>
+        <div class="button-grid" style="max-width: 400px;">
+            <div class="button-row">
+                <button class="calc-button function-button">sin</button>
+                <button class="calc-button function-button">cos</button>
+                <button class="calc-button function-button">tan</button>
+                <button class="calc-button operator-button">÷</button>
+            </div>
+            <div class="button-row">
+                <button class="calc-button number-button">7</button>
+                <button class="calc-button number-button">8</button>
+                <button class="calc-button number-button">9</button>
+                <button class="calc-button operator-button">×</button>
+            </div>
+            <div class="button-row">
+                <button class="calc-button number-button">4</button>
+                <button class="calc-button number-button">5</button>
+                <button class="calc-button number-button">6</button>
+                <button class="calc-button operator-button">-</button>
+            </div>
+            <div class="button-row">
+                <button class="calc-button number-button">1</button>
+                <button class="calc-button number-button">2</button>
+                <button class="calc-button number-button">3</button>
+                <button class="calc-button operator-button">+</button>
+            </div>
+            <div class="button-row">
+                <button class="calc-button control-button">AC</button>
+                <button class="calc-button number-button">0</button>
+                <button class="calc-button control-button">.</button>
+                <button class="calc-button control-button equals-button">=</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

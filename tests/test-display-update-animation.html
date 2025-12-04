@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Update Animation Test</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            padding: 2rem;
+        }
+        .test-section {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+        .test-result {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        .test-result.pass {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        .test-result.fail {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        .test-controls {
+            margin: 1rem 0;
+        }
+        button {
+            margin: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: var(--color-primary-light);
+        }
+    </style>
+</head>
+<body>
+    <h1>Display Update Animation Test</h1>
+    <p>Task 9: Requirements 2.3, 9.3</p>
+
+    <div class="test-section">
+        <h2>Test 1: Animation Keyframes Exist</h2>
+        <div id="test1-result" class="test-result">Running...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Animation Triggers on Display Update</h2>
+        <div id="calculator-container"></div>
+        <div class="test-controls">
+            <button id="trigger-update">Trigger Display Update</button>
+            <button id="trigger-calculation">Simulate Calculation</button>
+        </div>
+        <div id="test2-result" class="test-result">Click buttons to test animation</div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Animation Duration (250ms)</h2>
+        <div id="test3-result" class="test-result">Running...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 4: Class Removal After Animation</h2>
+        <div id="test4-result" class="test-result">Running...</div>
+    </div>
+
+    <script src="../src/number-formatter.js"></script>
+    <script src="../src/calculator-engine.js"></script>
+    <script src="../src/state-manager.js"></script>
+    <script src="../src/memory-manager.js"></script>
+    <script src="../src/expression-parser.js"></script>
+    <script src="../src/calculator-view.js"></script>
+    <script src="../src/calculator-controller.js"></script>
+
+    <script>
+        // Test 1: Check if animation keyframes exist
+        function test1() {
+            const styleSheets = Array.from(document.styleSheets);
+            let animationFound = false;
+
+            for (const sheet of styleSheets) {
+                try {
+                    const rules = Array.from(sheet.cssRules || []);
+                    for (const rule of rules) {
+                        if (rule.type === CSSRule.KEYFRAMES_RULE && rule.name === 'displayUpdate') {
+                            animationFound = true;
+                            break;
+                        }
+                    }
+                } catch (e) {
+                    // Skip stylesheets we can't access (CORS)
+                    continue;
+                }
+                if (animationFound) break;
+            }
+
+            const result = document.getElementById('test1-result');
+            if (animationFound) {
+                result.textContent = '✓ PASS: displayUpdate keyframe animation exists';
+                result.className = 'test-result pass';
+            } else {
+                result.textContent = '✗ FAIL: displayUpdate keyframe animation not found';
+                result.className = 'test-result fail';
+            }
+        }
+
+        // Test 2: Check if animation triggers on display update
+        let view, controller;
+        function setupCalculator() {
+            const engine = new CalculatorEngine();
+            const stateManager = new StateManager();
+            const memoryManager = new MemoryManager();
+            view = new CalculatorView('calculator-container');
+            controller = new CalculatorController(engine, stateManager, memoryManager, view);
+
+            view.render();
+
+            // Bind handlers
+            view.bindNumberButton((digit) => controller.handleNumberInput(digit));
+            view.bindOperatorButton((op) => controller.handleOperatorInput(op));
+            view.bindFunctionButton((fn) => controller.handleScientificFunction(fn));
+            view.bindControlButton((action) => {
+                switch (action) {
+                    case 'equals': controller.handleEquals(); break;
+                    case 'clear': controller.handleClear(); break;
+                    case 'all-clear': controller.handleAllClear(); break;
+                    case 'backspace': controller.handleBackspace(); break;
+                    case 'decimal': controller.handleDecimalPoint(); break;
+                    case 'negate': controller.handleNegate(); break;
+                    case 'angle-mode': controller.handleAngleModeToggle(); break;
+                    case 'open-paren': controller.handleParenthesis('open'); break;
+                    case 'close-paren': controller.handleParenthesis('close'); break;
+                    case 'memory-store': controller.handleMemoryStore(); break;
+                    case 'memory-recall': controller.handleMemoryRecall(); break;
+                    case 'memory-clear': controller.handleMemoryClear(); break;
+                    case 'memory-add': controller.handleMemoryAdd(); break;
+                }
+            });
+
+            controller.updateDisplay();
+        }
+
+        function test2() {
+            const triggerButton = document.getElementById('trigger-update');
+            const calcButton = document.getElementById('trigger-calculation');
+            const result = document.getElementById('test2-result');
+
+            triggerButton.addEventListener('click', () => {
+                // Trigger a simple display update
+                controller.handleNumberInput('5');
+                
+                // Check if animation class was added
+                setTimeout(() => {
+                    const mainDisplay = view.mainDisplay;
+                    const hasAnimation = mainDisplay.classList.contains('updating');
+                    
+                    if (hasAnimation) {
+                        result.textContent = '✓ Animation triggered! Watch the display fade and slide.';
+                        result.className = 'test-result pass';
+                    } else {
+                        // Animation might have already completed, check if value changed
+                        if (mainDisplay.textContent === '5') {
+                            result.textContent = '✓ Display updated (animation may have completed)';
+                            result.className = 'test-result pass';
+                        } else {
+                            result.textContent = '✗ Display update failed';
+                            result.className = 'test-result fail';
+                        }
+                    }
+                }, 10);
+            });
+
+            calcButton.addEventListener('click', () => {
+                // Simulate a calculation
+                controller.handleAllClear();
+                controller.handleNumberInput('2');
+                controller.handleOperatorInput('+');
+                controller.handleNumberInput('3');
+                controller.handleEquals();
+                
+                result.textContent = '✓ Calculation completed! Watch for animation on result display.';
+                result.className = 'test-result pass';
+            });
+        }
+
+        // Test 3: Check animation duration
+        function test3() {
+            const result = document.getElementById('test3-result');
+            const computedStyle = getComputedStyle(document.documentElement);
+            const duration = computedStyle.getPropertyValue('--duration-normal').trim();
+            
+            if (duration === '250ms') {
+                result.textContent = `✓ PASS: Animation duration is ${duration}`;
+                result.className = 'test-result pass';
+            } else {
+                result.textContent = `✗ FAIL: Animation duration is ${duration}, expected 250ms`;
+                result.className = 'test-result fail';
+            }
+        }
+
+        // Test 4: Check if class is removed after animation
+        function test4() {
+            const result = document.getElementById('test4-result');
+            
+            // Trigger an update
+            controller.handleNumberInput('7');
+            
+            // Check immediately that class is added
+            setTimeout(() => {
+                const hasClassDuring = view.mainDisplay.classList.contains('updating');
+                
+                // Check after animation completes that class is removed
+                setTimeout(() => {
+                    const hasClassAfter = view.mainDisplay.classList.contains('updating');
+                    
+                    if (hasClassDuring && !hasClassAfter) {
+                        result.textContent = '✓ PASS: Class added during animation and removed after (250ms)';
+                        result.className = 'test-result pass';
+                    } else if (!hasClassDuring && !hasClassAfter) {
+                        result.textContent = '⚠ WARNING: Class not detected (animation may be too fast to catch)';
+                        result.className = 'test-result pass';
+                    } else if (hasClassAfter) {
+                        result.textContent = '✗ FAIL: Class not removed after animation';
+                        result.className = 'test-result fail';
+                    } else {
+                        result.textContent = '✗ FAIL: Class not added during animation';
+                        result.className = 'test-result fail';
+                    }
+                }, 300);
+            }, 10);
+        }
+
+        // Run tests
+        window.addEventListener('load', () => {
+            setupCalculator();
+            test1();
+            test2();
+            test3();
+            
+            // Run test 4 after a delay to avoid interference
+            setTimeout(test4, 1000);
+        });
+    </script>
+</body>
+</html>

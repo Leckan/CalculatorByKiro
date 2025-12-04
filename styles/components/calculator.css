@@ -1,0 +1,54 @@
+/* ========================================
+   CALCULATOR CONTAINER
+   Glass-morphism Effect
+   Requirements: 8.1, 8.2, 8.3, 8.4, 8.5
+   ======================================== */
+
+.calculator {
+    /* Glass-morphism effect - semi-transparent background with blur */
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur)); /* Safari support */
+    
+    /* Rounded corners */
+    border-radius: var(--radius-xl); /* 24px */
+    
+    /* Subtle border with semi-transparent white */
+    border: 1px solid var(--glass-border);
+    
+    /* Soft shadow for elevation */
+    box-shadow: var(--shadow-xl);
+    
+    /* Layout and spacing */
+    max-width: 420px;
+    width: 100%;
+    padding: var(--space-6);
+    
+    /* Ensure content is positioned correctly */
+    position: relative;
+    
+    /* Smooth transitions for any state changes */
+    transition: all var(--duration-normal) var(--easing-standard);
+    
+    /* Entrance animation - fadeInScale with 600ms duration and decelerate easing
+       Requirements: 10.1, 10.3, 10.4, 10.5
+       The calculator remains interactive during animation (no pointer-events blocking) */
+    animation: fadeInScale var(--duration-entrance) var(--easing-decelerate);
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(10px)) {
+    .calculator {
+        /* Provide a more opaque background as fallback */
+        background: rgba(15, 23, 42, 0.85);
+    }
+}
+
+/* Desktop viewport centering - handled in main.css body styles */
+/* The calculator is already centered via flexbox on the body element */
+
+/* Hover effect for subtle interactivity (optional enhancement) */
+.calculator:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}

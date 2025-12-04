@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 11 Integration Test - Indicator Animations</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            padding: 2rem;
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .test-title {
+            font-family: var(--font-display);
+            font-size: var(--text-3xl);
+            font-weight: var(--font-bold);
+            color: var(--color-text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .test-subtitle {
+            font-family: var(--font-display);
+            font-size: var(--text-lg);
+            color: var(--color-text-secondary);
+        }
+        
+        .test-instructions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .test-instructions h3 {
+            font-family: var(--font-display);
+            font-size: var(--text-xl);
+            font-weight: var(--font-bold);
+            color: var(--color-text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .test-instructions ol {
+            font-family: var(--font-display);
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+        }
+        
+        .test-instructions li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .test-instructions code {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: var(--color-primary-light);
+        }
+        
+        .calculator-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 600px;
+        }
+        
+        .checklist {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .checklist h3 {
+            font-family: var(--font-display);
+            font-size: var(--text-xl);
+            font-weight: var(--font-bold);
+            color: var(--color-text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            font-family: var(--font-display);
+            color: var(--color-text-secondary);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+        
+        .checklist li::before {
+            content: '✓ ';
+            color: var(--color-success);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-header">
+        <div class="test-title">Task 11: Indicator Animations</div>
+        <div class="test-subtitle">Integration Test - Requirements 6.1, 6.2, 6.3, 6.4</div>
+    </div>
+    
+    <div class="test-instructions">
+        <h3>Test Instructions</h3>
+        <ol>
+            <li><strong>Angle Mode Indicator:</strong> Click the <code>DEG/RAD</code> button to toggle angle mode. 
+                Watch for smooth transition (250ms) and the active state with scale and glow effect.</li>
+            <li><strong>Memory Indicator:</strong> Click <code>MS</code> to store a value in memory. 
+                The <code>M</code> indicator should appear with a pulsing animation (2s cycle). 
+                Click <code>MC</code> to clear memory and watch the pulse stop smoothly.</li>
+            <li><strong>Parenthesis Indicator:</strong> Click <code>(</code> to open parentheses. 
+                Watch the counter increase with smooth transitions and active state (scale + glow). 
+                Click <code>)</code> to close and watch it decrease. When it reaches 0, the active state should disappear.</li>
+            <li><strong>Combined Test:</strong> Try using all three indicators simultaneously to verify they don't interfere with each other.</li>
+        </ol>
+    </div>
+    
+    <div class="calculator-wrapper">
+        <div id="calculator-container">
+            <!-- Calculator will be rendered here -->
+        </div>
+    </div>
+    
+    <div class="checklist">
+        <h3>Requirements Verification Checklist</h3>
+        <ul>
+            <li><strong>Requirement 6.1:</strong> Mode indicators have smooth transitions when toggling angle mode</li>
+            <li><strong>Requirement 6.2:</strong> Memory indicator has pulse animation (2s cycle) when memory has value</li>
+            <li><strong>Requirement 6.3:</strong> Parenthesis indicator has smooth transitions for level changes</li>
+            <li><strong>Requirement 6.4:</strong> All indicator animations use consistent 250ms timing</li>
+            <li><strong>Active State:</strong> Scale effect (1.05) applied to active indicators</li>
+            <li><strong>Glow Effect:</strong> Box-shadow glow effect on active indicators</li>
+            <li><strong>Smooth Transitions:</strong> All state changes animate smoothly without jarring jumps</li>
+        </ul>
+    </div>
+    
+    <!-- Load calculator modules -->
+    <script src="../src/number-formatter.js"></script>
+    <script src="../src/calculator-engine.js"></script>
+    <script src="../src/state-manager.js"></script>
+    <script src="../src/memory-manager.js"></script>
+    <script src="../src/expression-parser.js"></script>
+    <script src="../src/calculator-view.js"></script>
+    <script src="../src/calculator-controller.js"></script>
+    <script src="../main.js"></script>
+</body>
+</html>
