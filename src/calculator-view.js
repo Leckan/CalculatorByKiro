@@ -139,19 +139,21 @@ class CalculatorView {
                 { text: '6', type: 'number', action: '6' },
                 { text: '-', type: 'operator', action: '-' }
             ],
-            // Row 4: Root, power, factorial + number pad row 3 (1,2,3) + add
+            // Row 4: Root, power, factorial + negate + number pad row 3 (1,2,3) + add
             [
                 { text: '√', type: 'function', action: 'sqrt' },
                 { text: '^', type: 'operator', action: '^' },
                 { text: '!', type: 'function', action: 'factorial' },
                 { text: 'exp', type: 'function', action: 'exp' },
-                { text: '', type: 'empty', action: '' },
+                { text: '±', type: 'control', action: 'negate' },
                 { text: '1', type: 'number', action: '1' },
                 { text: '2', type: 'number', action: '2' },
                 { text: '3', type: 'number', action: '3' },
                 { text: '+', type: 'operator', action: '+' }
             ],
-            // Row 5: Bottom row with 0 (spanning 2), decimal, negate + equals
+            // Row 5: Bottom row with 0 (spanning 2), decimal + equals
+            // Grid: 4 empty + 0 (spans 2) + decimal + equals = 7 items filling 8 columns
+            // But we need 9 columns total, so we need one more empty
             [
                 { text: '', type: 'empty', action: '' },
                 { text: '', type: 'empty', action: '' },
@@ -160,7 +162,6 @@ class CalculatorView {
                 { text: '', type: 'empty', action: '' },
                 { text: '0', type: 'number', action: '0', className: 'zero-button' },
                 { text: '.', type: 'control', action: 'decimal' },
-                { text: '±', type: 'control', action: 'negate' },
                 { text: '=', type: 'control', action: 'equals', className: 'equals-button' }
             ]
         ];

@@ -24,14 +24,18 @@ The calculator button layout has been reorganized for better usability, ergonomi
 
 ### Layout Structure (9 columns)
 ```
-Row 1: [MC] [MR] [M+] [MS] [AC] [C ] [⌫ ] [÷ ]
-Row 2: [sin][cos][tan][D/R][(  ][7  ][8  ][9  ][× ]
-Row 3: [ln ][log][e  ][π  ][)  ][4  ][5  ][6  ][- ]
-Row 4: [√  ][^  ][! ][exp][   ][1  ][2  ][3  ][+ ]
-Row 5: [   ][   ][   ][   ][   ][0  0][.  ][± ][= ]
+Row 1: [MC ] [MR ] [M+ ] [MS ] [AC ] [C  ] [⌫  ] [÷  ]
+Row 2: [sin] [cos] [tan] [D/R] [(  ] [7  ] [8  ] [9  ] [×  ]
+Row 3: [ln ] [log] [e  ] [π  ] [)  ] [4  ] [5  ] [6  ] [-  ]
+Row 4: [√  ] [^  ] [!  ] [exp] [±  ] [1  ] [2  ] [3  ] [+  ]
+Row 5: [   ] [   ] [   ] [   ] [   ] [0  ] [0  ] [.  ] [=  ]
+                                      └─────┘
+                                    (spans 2 cols)
 ```
 
-**Perfect Operator Column**: All four basic operators (÷, ×, -, +) and equals (=) form a clean vertical column on the right side, exactly like a standard calculator!
+**Perfect Operator Column**: All four basic operators (÷, ×, -, +) and equals (=) form a clean vertical column on the right side (column 9), exactly like a standard calculator!
+
+**Negate Button**: Moved to Row 4, Column 5 for better accessibility and to maintain the 9-column grid structure.
 
 ### Key Improvements
 
