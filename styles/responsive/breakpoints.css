@@ -51,7 +51,7 @@
     /* Adjust button grid spacing - Task 18: Requirements 7.4 */
     .button-grid {
         gap: var(--space-2); /* Tighter spacing on mobile */
-        grid-template-columns: repeat(9, 1fr); /* 9 columns for proper layout */
+        grid-template-columns: repeat(4, 1fr); /* 4 columns maximum */
     }
     
     /* Indicator adjustments */
@@ -111,7 +111,7 @@
     /* Maintain standard button grid spacing - Task 18: Requirements 7.4 */
     .button-grid {
         gap: var(--space-3);
-        grid-template-columns: repeat(9, 1fr); /* 9 columns for proper layout */
+        grid-template-columns: repeat(4, 1fr); /* 4 columns maximum */
     }
     
     /* Calculator container sizing */
@@ -166,7 +166,7 @@
     /* Standard button grid spacing - Task 18: Requirements 7.4 */
     .button-grid {
         gap: var(--space-3);
-        grid-template-columns: repeat(9, 1fr); /* 9 columns for proper layout */
+        grid-template-columns: repeat(4, 1fr); /* 4 columns maximum */
     }
     
     /* Calculator container sizing */
@@ -218,7 +218,7 @@
     
     .button-grid {
         gap: var(--space-2);
-        grid-template-columns: repeat(9, 1fr); /* 9 columns for proper layout */
+        grid-template-columns: repeat(4, 1fr); /* 4 columns maximum */
     }
 }
 

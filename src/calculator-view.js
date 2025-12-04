@@ -100,69 +100,76 @@ class CalculatorView {
         const buttonGrid = document.createElement('div');
         buttonGrid.className = 'button-grid';
 
-        // Button layout definition - optimized for usability and ergonomics
-        // Follows standard calculator conventions with logical grouping
-        // 8-column grid: 4 scientific functions + 3 number pad + 1 operator column
+        // Button layout definition - compact 4-column layout
+        // Maximum 4 buttons per row for clean, organized appearance
         const buttonLayout = [
-            // Row 1: Memory and clear functions (grouped by function)
+            // Row 1: Memory functions
             [
                 { text: 'MC', type: 'control', action: 'memory-clear' },
                 { text: 'MR', type: 'control', action: 'memory-recall' },
                 { text: 'M+', type: 'control', action: 'memory-add' },
-                { text: 'MS', type: 'control', action: 'memory-store' },
+                { text: 'MS', type: 'control', action: 'memory-store' }
+            ],
+            // Row 2: Clear functions
+            [
                 { text: 'AC', type: 'control', action: 'all-clear' },
                 { text: 'C', type: 'control', action: 'clear' },
                 { text: '⌫', type: 'control', action: 'backspace' },
                 { text: '÷', type: 'operator', action: '/' }
             ],
-            // Row 2: Trigonometric functions + parentheses + number pad row 1 (7,8,9) + multiply
+            // Row 3: Trigonometric functions
             [
                 { text: 'sin', type: 'function', action: 'sin' },
                 { text: 'cos', type: 'function', action: 'cos' },
                 { text: 'tan', type: 'function', action: 'tan' },
-                { text: 'DEG/RAD', type: 'control', action: 'angle-mode' },
-                { text: '(', type: 'control', action: 'open-paren' },
-                { text: '7', type: 'number', action: '7' },
-                { text: '8', type: 'number', action: '8' },
-                { text: '9', type: 'number', action: '9' },
-                { text: '×', type: 'operator', action: '*' }
+                { text: 'DEG/RAD', type: 'control', action: 'angle-mode' }
             ],
-            // Row 3: Logarithmic/exponential functions + number pad row 2 (4,5,6) + subtract
+            // Row 4: Logarithmic and constants
             [
                 { text: 'ln', type: 'function', action: 'ln' },
                 { text: 'log', type: 'function', action: 'log' },
                 { text: 'e', type: 'function', action: 'e' },
-                { text: 'π', type: 'function', action: 'pi' },
-                { text: ')', type: 'control', action: 'close-paren' },
-                { text: '4', type: 'number', action: '4' },
-                { text: '5', type: 'number', action: '5' },
-                { text: '6', type: 'number', action: '6' },
-                { text: '-', type: 'operator', action: '-' }
+                { text: 'π', type: 'function', action: 'pi' }
             ],
-            // Row 4: Root, power, factorial + negate + number pad row 3 (1,2,3) + add
+            // Row 5: Root, power, factorial, exp
             [
                 { text: '√', type: 'function', action: 'sqrt' },
                 { text: '^', type: 'operator', action: '^' },
                 { text: '!', type: 'function', action: 'factorial' },
-                { text: 'exp', type: 'function', action: 'exp' },
+                { text: 'exp', type: 'function', action: 'exp' }
+            ],
+            // Row 6: Parentheses and number pad row 1
+            [
+                { text: '(', type: 'control', action: 'open-paren' },
+                { text: ')', type: 'control', action: 'close-paren' },
+                { text: '7', type: 'number', action: '7' },
+                { text: '×', type: 'operator', action: '*' }
+            ],
+            // Row 7: Number pad row 2
+            [
                 { text: '±', type: 'control', action: 'negate' },
+                { text: '8', type: 'number', action: '8' },
+                { text: '9', type: 'number', action: '9' },
+                { text: '-', type: 'operator', action: '-' }
+            ],
+            // Row 8: Number pad row 3
+            [
+                { text: '4', type: 'number', action: '4' },
+                { text: '5', type: 'number', action: '5' },
+                { text: '6', type: 'number', action: '6' },
+                { text: '+', type: 'operator', action: '+' }
+            ],
+            // Row 9: Number pad row 4
+            [
                 { text: '1', type: 'number', action: '1' },
                 { text: '2', type: 'number', action: '2' },
                 { text: '3', type: 'number', action: '3' },
-                { text: '+', type: 'operator', action: '+' }
-            ],
-            // Row 5: Bottom row with 0 (spanning 2), decimal + equals
-            // Grid: 4 empty + 0 (spans 2) + decimal + equals = 7 items filling 8 columns
-            // But we need 9 columns total, so we need one more empty
-            [
-                { text: '', type: 'empty', action: '' },
-                { text: '', type: 'empty', action: '' },
-                { text: '', type: 'empty', action: '' },
-                { text: '', type: 'empty', action: '' },
-                { text: '', type: 'empty', action: '' },
-                { text: '0', type: 'number', action: '0', className: 'zero-button' },
-                { text: '.', type: 'control', action: 'decimal' },
                 { text: '=', type: 'control', action: 'equals', className: 'equals-button' }
+            ],
+            // Row 10: Bottom row with 0 spanning 2 columns
+            [
+                { text: '0', type: 'number', action: '0', className: 'zero-button' },
+                { text: '.', type: 'control', action: 'decimal' }
             ]
         ];
 

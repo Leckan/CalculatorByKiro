@@ -84,12 +84,12 @@
    Task 18: Requirements 7.4
    ======================================== */
 
-/* Button grid layout using CSS Grid with 9 columns
+/* Button grid layout using CSS Grid with 4 columns
    Requirements: 7.4
-   Layout: 4 scientific functions + 1 spacer + 3 number pad + 1 operator */
+   Compact layout with maximum 4 buttons per row */
 .button-grid {
     display: grid;
-    grid-template-columns: repeat(9, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--space-3);
     width: 100%;
 }
