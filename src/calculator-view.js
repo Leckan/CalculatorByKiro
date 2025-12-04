@@ -115,28 +115,29 @@ class CalculatorView {
                 { text: 'AC', type: 'control', action: 'all-clear' },
                 { text: 'C', type: 'control', action: 'clear' },
                 { text: '⌫', type: 'control', action: 'backspace' },
-                { text: '÷', type: 'operator', action: '/' }
+                { text: 'DEG/RAD', type: 'control', action: 'angle-mode' }
+                
             ],
             // Row 3: Trigonometric functions + angle mode
             [
                 { text: 'sin', type: 'function', action: 'sin' },
                 { text: 'cos', type: 'function', action: 'cos' },
                 { text: 'tan', type: 'function', action: 'tan' },
-                { text: 'DEG/RAD', type: 'control', action: 'angle-mode' }
+                { text: 'exp', type: 'function', action: 'exp' }
             ],
             // Row 4: Logarithmic functions + constants
             [
                 { text: 'ln', type: 'function', action: 'ln' },
                 { text: 'log', type: 'function', action: 'log' },
                 { text: 'e', type: 'function', action: 'e' },
-                { text: 'π', type: 'function', action: 'pi' }
+                { text: '^', type: 'operator', action: '^' }
             ],
             // Row 5: Advanced functions
             [
                 { text: '√', type: 'function', action: 'sqrt' },
-                { text: '^', type: 'operator', action: '^' },
+                { text: 'π', type: 'function', action: 'pi' },
                 { text: '!', type: 'function', action: 'factorial' },
-                { text: 'exp', type: 'function', action: 'exp' }
+                { text: '÷', type: 'operator', action: '/' }
             ],
             // Row 6: Parentheses, negate + multiply
             [

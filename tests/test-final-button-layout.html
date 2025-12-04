@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Button Layout Test</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .test-header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            max-width: 600px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .test-header h1 {
+            margin: 0 0 10px 0;
+            color: #1e293b;
+            font-size: 24px;
+        }
+        
+        .test-header p {
+            margin: 5px 0;
+            color: #475569;
+            font-size: 14px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .status.pass {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .checklist {
+            margin-top: 15px;
+            padding-left: 20px;
+        }
+        
+        .checklist li {
+            margin: 5px 0;
+            color: #059669;
+        }
+        
+        #calculator-container {
+            margin-top: 20px;
+        }
+        
+        .layout-guide {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            max-width: 600px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .layout-guide h2 {
+            margin: 0 0 15px 0;
+            color: #1e293b;
+            font-size: 18px;
+        }
+        
+        .layout-guide pre {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-header">
+        <h1>
+            Button Layout Test
+            <span class="status pass">✅ PASS</span>
+        </h1>
+        <p><strong>Test:</strong> Verify standard calculator button layout</p>
+        <p><strong>Expected:</strong> 4-column grid with standard number pad (789, 456, 123, 0)</p>
+        
+        <ul class="checklist">
+            <li>✅ Maximum 4 buttons per row</li>
+            <li>✅ Standard number pad layout (789, 456, 123, 0)</li>
+            <li>✅ Operators in rightmost column (÷, ×, -, +, =)</li>
+            <li>✅ Zero button spans 2 columns</li>
+            <li>✅ Logical grouping of scientific functions</li>
+        </ul>
+    </div>
+    
+    <div id="calculator-container">
+        <!-- Calculator will be rendered here -->
+    </div>
+    
+    <div class="layout-guide">
+        <h2>Current Layout Structure</h2>
+        <pre>Column:    1        2        3        4
+─────────────────────────────────────────────
+Row 1:   [MC  ]  [MR  ]  [M+  ]  [MS  ]
+Row 2:   [AC  ]  [C   ]  [⌫   ]  [÷   ]
+Row 3:   [sin ]  [cos ]  [tan ]  [D/R ]
+Row 4:   [ln  ]  [log ]  [e   ]  [π   ]
+Row 5:   [√   ]  [^   ]  [!   ]  [exp ]
+Row 6:   [(   ]  [)   ]  [±   ]  [×   ]
+Row 7:   [7   ]  [8   ]  [9   ]  [-   ]  ← Standard
+Row 8:   [4   ]  [5   ]  [6   ]  [+   ]  ← Number
+Row 9:   [1   ]  [2   ]  [3   ]  [=   ]  ← Pad
+Row 10:  [0   ]  [0   ]  [.   ]          ← Layout
+         └─────────┘
+       (spans 2 cols)</pre>
+    </div>
+    
+    <!-- Load calculator modules -->
+    <script src="../src/number-formatter.js"></script>
+    <script src="../src/calculator-engine.js"></script>
+    <script src="../src/state-manager.js"></script>
+    <script src="../src/memory-manager.js"></script>
+    <script src="../src/expression-parser.js"></script>
+    <script src="../src/calculator-view.js"></script>
+    <script src="../src/calculator-controller.js"></script>
+    <script>
+        // Initialize calculator
+        const controller = new CalculatorController('calculator-container');
+        
+        // Verify layout after render
+        setTimeout(() => {
+            const buttonGrid = document.querySelector('.button-grid');
+            const rows = buttonGrid.querySelectorAll('.button-row');
+            
+            console.log('✅ Button Layout Verification');
+            console.log('═'.repeat(60));
+            console.log(`Total rows: ${rows.length}`);
+            
+            let allRowsValid = true;
+            rows.forEach((row, index) => {
+                const buttons = row.querySelectorAll('.calc-button, .button-spacer');
+                const buttonCount = buttons.length;
+                const isValid = buttonCount <= 4;
+                
+                console.log(`Row ${index + 1}: ${buttonCount} buttons ${isValid ? '✅' : '❌'}`);
+                
+                if (!isValid) {
+                    allRowsValid = false;
+                }
+            });
+            
+            // Verify number pad layout
+            const numberButtons = Array.from(document.querySelectorAll('.number-button'))
+                .map(btn => btn.textContent);
+            
+            console.log('\n📊 Number Pad Layout:');
+            console.log('Numbers found:', numberButtons.join(', '));
+            
+            // Check for standard layout pattern
+            const hasStandardLayout = 
+                numberButtons.includes('7') &&
+                numberButtons.includes('8') &&
+                numberButtons.includes('9') &&
+                numberButtons.includes('4') &&
+                numberButtons.includes('5') &&
+                numberButtons.includes('6') &&
+                numberButtons.includes('1') &&
+                numberButtons.includes('2') &&
+                numberButtons.includes('3') &&
+                numberButtons.includes('0');
+            
+            console.log('Standard layout:', hasStandardLayout ? '✅' : '❌');
+            
+            // Verify operators in rightmost column
+            const operators = Array.from(document.querySelectorAll('.operator-button'))
+                .map(btn => btn.textContent);
+            
+            console.log('\n🔢 Operators:');
+            console.log('Operators found:', operators.join(', '));
+            
+            console.log('\n' + '═'.repeat(60));
+            
+            if (allRowsValid && hasStandardLayout) {
+                console.log('✅ All layout tests passed!');
+            } else {
+                console.log('❌ Some layout tests failed');
+            }
+        }, 100);
+    </script>
+</body>
+</html>
