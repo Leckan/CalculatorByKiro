@@ -4,13 +4,19 @@
 /* Base indicator transitions - Requirement 6.4 */
 .indicator {
     /* Smooth transitions for all state changes - 250ms duration */
-    transition: all var(--duration-normal) var(--easing-standard);
+    transition: transform var(--duration-normal) var(--easing-standard),
+                opacity var(--duration-normal) var(--easing-standard),
+                background var(--duration-normal) var(--easing-standard),
+                box-shadow var(--duration-normal) var(--easing-standard);
+    
+    /* Performance optimization - Task 17: Requirements 2.5
+       will-change for indicator animations */
+    will-change: transform, opacity;
 }
 
 /* Active state for angle mode indicator - Requirements 6.1 */
 .angle-mode {
-    /* Smooth transition when toggling modes */
-    transition: all var(--duration-normal) var(--easing-standard);
+    /* Inherits optimized transitions from .indicator base class */
 }
 
 .angle-mode.active {
@@ -27,11 +33,11 @@
 
 /* Memory indicator with pulse animation - Requirement 6.2 */
 .memory {
-    /* Smooth transition for state changes */
-    transition: all var(--duration-normal) var(--easing-standard);
+    /* Inherits optimized transitions from .indicator base class */
 }
 
-/* Pulse animation for memory indicator when active */
+/* Pulse animation for memory indicator when active
+   Task 17: Uses transform and opacity for GPU acceleration */
 @keyframes indicatorPulse {
     0%, 100% {
         opacity: 1;
@@ -52,12 +58,12 @@
     
     /* Subtle glow effect */
     box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+    /* will-change already set on .indicator base class */
 }
 
 /* Parenthesis level indicator - Requirement 6.3 */
 .parenthesis {
-    /* Smooth transition for level changes */
-    transition: all var(--duration-normal) var(--easing-standard);
+    /* Inherits optimized transitions from .indicator base class */
 }
 
 /* Active state when parenthesis level > 0 */

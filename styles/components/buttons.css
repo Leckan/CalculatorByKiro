@@ -31,7 +31,13 @@
     user-select: none;
     
     /* Transitions - Task 7: Requirements 2.2, 2.5 */
-    transition: all var(--duration-fast) var(--easing-standard);
+    transition: transform var(--duration-fast) var(--easing-standard),
+                box-shadow var(--duration-fast) var(--easing-standard),
+                opacity var(--duration-fast) var(--easing-standard);
+    
+    /* Performance optimization - Task 17: Requirements 2.5
+       will-change hints browser to optimize for transform and opacity changes */
+    will-change: transform, opacity;
     
     /* Ensure text is centered */
     display: flex;

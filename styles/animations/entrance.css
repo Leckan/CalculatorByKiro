@@ -9,6 +9,7 @@
    - Translates from 20px below to original position
    - Duration: 600ms with decelerate easing
    - Calculator remains interactive during animation
+   Task 17: Uses transform and opacity for GPU acceleration
 */
 @keyframes fadeInScale {
     0% {
@@ -27,6 +28,7 @@
    - Translates from 10px below to original position
    - Applied with staggered delays (30ms per button)
    - Total stagger time fits within 800ms
+   Task 17: Uses transform and opacity for GPU acceleration
 */
 @keyframes buttonStagger {
     0% {

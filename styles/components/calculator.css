@@ -28,7 +28,14 @@
     position: relative;
     
     /* Smooth transitions for any state changes */
-    transition: all var(--duration-normal) var(--easing-standard);
+    transition: border-color var(--duration-normal) var(--easing-standard),
+                box-shadow var(--duration-normal) var(--easing-standard),
+                transform var(--duration-normal) var(--easing-standard),
+                opacity var(--duration-normal) var(--easing-standard);
+    
+    /* Performance optimization - Task 17: Requirements 2.5
+       will-change for entrance animation */
+    will-change: transform, opacity;
     
     /* Entrance animation - fadeInScale with 600ms duration and decelerate easing
        Requirements: 10.1, 10.3, 10.4, 10.5

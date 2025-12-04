@@ -1,7 +1,8 @@
 /* State Transitions */
 /* Task 9: Display Update Animation - Requirements 2.3, 9.3 */
 
-/* Display Update Animation - fade and slide effect */
+/* Display Update Animation - fade and slide effect
+   Task 17: Uses transform and opacity for GPU acceleration */
 @keyframes displayUpdate {
     0% {
         opacity: 1;
@@ -20,6 +21,7 @@
 /* Apply animation when display is updating */
 .main-display.updating {
     animation: displayUpdate var(--duration-normal) var(--easing-standard);
+    /* will-change already set on .main-display base class */
 }
 
 /* ========================================
@@ -29,7 +31,8 @@
    ======================================== */
 
 /* Result highlight animation - Brief highlight on calculation completion
-   Requirements: 9.1, 9.4 */
+   Requirements: 9.1, 9.4
+   Task 17: Uses transform for GPU acceleration */
 @keyframes resultHighlight {
     0% {
         background: transparent;
@@ -49,10 +52,12 @@
    Requirements: 9.1, 9.4 */
 .main-display.result-highlight {
     animation: resultHighlight var(--duration-normal) var(--easing-standard);
+    /* will-change already set on .main-display base class */
 }
 
 /* Equals button feedback animation - Visual feedback on equals press
-   Requirements: 9.2, 9.4 */
+   Requirements: 9.2, 9.4
+   Task 17: Uses transform for GPU acceleration */
 @keyframes equalsPress {
     0% {
         transform: scale(1);
@@ -73,10 +78,12 @@
    Requirements: 9.2, 9.4 */
 .equals-button.calculating {
     animation: equalsPress var(--duration-normal) var(--easing-standard);
+    /* will-change already set on .calc-button base class */
 }
 
 /* Long calculation fade-in - Fade-in effect for calculation results
-   Requirements: 9.3, 9.4 */
+   Requirements: 9.3, 9.4
+   Task 17: Uses transform and opacity for GPU acceleration */
 @keyframes resultFadeIn {
     0% {
         opacity: 0;
@@ -92,4 +99,5 @@
    Requirements: 9.3, 9.4 */
 .main-display.result-fade-in {
     animation: resultFadeIn var(--duration-normal) var(--easing-decelerate);
+    /* will-change already set on .main-display base class */
 }

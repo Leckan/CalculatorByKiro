@@ -109,11 +109,16 @@
     
     /* ========================================
        ANIMATION TIMINGS
+       Task 17: All animations complete within 300ms (Requirements 2.5)
+       - Fast animations: 150ms (button press, hover)
+       - Normal animations: 250ms (display updates, indicators)
+       - Slow animations: 300ms (complex transitions, max allowed)
+       - Entrance animations: 600ms (initial page load only)
        ======================================== */
     
     --duration-fast: 150ms;
     --duration-normal: 250ms;
-    --duration-slow: 350ms;
+    --duration-slow: 300ms;
     --duration-entrance: 600ms;
     
     /* Easing Functions */

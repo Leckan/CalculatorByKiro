@@ -9,7 +9,8 @@
    ======================================== */
 
 /* Button press keyframe animation - Scale effect for tactile feedback
-   Requirements: 2.1 */
+   Requirements: 2.1
+   Task 17: Uses transform for GPU acceleration */
 @keyframes buttonPress {
     0% {
         transform: scale(1);
@@ -26,6 +27,7 @@
    Requirements: 2.1, 2.5 */
 .calc-button.pressed {
     animation: buttonPress var(--duration-fast) var(--easing-standard);
+    /* will-change already set on .calc-button base class */
 }
 
 /* ========================================
@@ -35,7 +37,8 @@
    ======================================== */
 
 /* Error shake keyframe animation - Horizontal shake for error feedback
-   Requirements: 2.4 */
+   Requirements: 2.4
+   Task 17: Uses transform for GPU acceleration */
 @keyframes errorShake {
     0%, 100% {
         transform: translateX(0);
@@ -54,4 +57,5 @@
     animation: errorShake 500ms var(--easing-standard);
     background: rgba(239, 68, 68, 0.1);
     border: 1px solid rgba(239, 68, 68, 0.3);
+    /* will-change already set on .display-area base class */
 }
