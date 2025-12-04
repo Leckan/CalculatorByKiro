@@ -132,7 +132,7 @@
   - Profile CSS performance and optimize if needed
   - _Requirements: 2.5_
 
-- [ ] 18. Add CSS Grid layout for button arrangement
+- [x] 18. Add CSS Grid layout for button arrangement
   - Implement CSS Grid with 4 columns
   - Set consistent gap spacing between buttons
   - Configure special button spans (equals, zero)
@@ -140,7 +140,7 @@
   - Test grid layout on different screen sizes
   - _Requirements: 7.4_
 
-- [ ] 19. Implement backdrop-filter fallbacks
+- [x] 19. Implement backdrop-filter fallbacks
   - Add @supports query for backdrop-filter
   - Provide solid background fallback for unsupported browsers
   - Test glass effect on Safari, Chrome, Firefox, Edge

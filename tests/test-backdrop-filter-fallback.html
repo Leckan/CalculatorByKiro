@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backdrop Filter Fallback Test - Task 19</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            padding: 2rem;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .test-header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        
+        .test-header h1 {
+            color: var(--color-text-primary);
+            font-family: var(--font-display);
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .test-header p {
+            color: var(--color-text-secondary);
+            font-family: var(--font-display);
+            margin: 0;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .test-section h2 {
+            color: var(--color-text-primary);
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            margin: 0 0 1rem 0;
+        }
+        
+        .test-section p {
+            color: var(--color-text-secondary);
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+            margin: 0 0 1rem 0;
+            line-height: 1.5;
+        }
+        
+        .support-info {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--color-text-primary);
+        }
+        
+        .support-info.supported {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--color-success);
+        }
+        
+        .support-info.not-supported {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--color-error);
+        }
+        
+        .calculator-demo {
+            margin-top: 1rem;
+        }
+        
+        /* Simulated fallback for testing */
+        .calculator-fallback {
+            background: rgba(15, 23, 42, 0.95) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+        }
+        
+        .calculator-fallback .display-area {
+            background: rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .comparison-item {
+            text-align: center;
+        }
+        
+        .comparison-item h3 {
+            color: var(--color-text-primary);
+            font-family: var(--font-display);
+            margin: 0 0 1rem 0;
+        }
+        
+        .results-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+        
+        .results-section h2 {
+            color: var(--color-text-primary);
+            font-family: var(--font-display);
+            margin: 0 0 1rem 0;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            font-family: var(--font-display);
+            color: var(--color-text-primary);
+        }
+        
+        .result-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .result-status.pass {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--color-success);
+        }
+        
+        .result-status.fail {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--color-error);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>Task 19: Backdrop Filter Fallback Test</h1>
+            <p>Testing glass-morphism effect with and without backdrop-filter support</p>
+            <p>Requirements: 8.1, 8.5 - Ensure readability with and without backdrop-filter</p>
+        </div>
+        
+        <div class="test-grid">
+            <div class="test-section">
+                <h2>Browser Support Detection</h2>
+                <p>Detecting backdrop-filter support in your current browser:</p>
+                <div id="support-detection" class="support-info">
+                    Checking support...
+                </div>
+                <p><strong>Expected Behavior:</strong></p>
+                <ul style="color: var(--color-text-secondary); font-family: var(--font-display); font-size: 0.875rem; line-height: 1.6;">
+                    <li>Modern browsers (Chrome, Safari, Edge): Supported</li>
+                    <li>Firefox on Windows: May not be supported</li>
+                    <li>Older browsers: Not supported</li>
+                </ul>
+            </div>
+            
+            <div class="test-section">
+                <h2>Fallback Strategy</h2>
+                <p>When backdrop-filter is not supported:</p>
+                <ul style="color: var(--color-text-secondary); font-family: var(--font-display); font-size: 0.875rem; line-height: 1.6;">
+                    <li>Background opacity increases to 95%</li>
+                    <li>Border becomes more visible (20% opacity)</li>
+                    <li>Shadow is enhanced for depth</li>
+                    <li>Display area background darkens</li>
+                    <li>Text remains fully readable</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="comparison-grid">
+            <div class="comparison-item">
+                <h3>With Backdrop Filter (Modern)</h3>
+                <div id="calculator-modern" class="calculator-demo"></div>
+            </div>
+            
+            <div class="comparison-item">
+                <h3>Without Backdrop Filter (Fallback)</h3>
+                <div id="calculator-fallback" class="calculator-demo"></div>
+            </div>
+        </div>
+        
+        <div class="results-section">
+            <h2>Test Results</h2>
+            <div id="test-results"></div>
+        </div>
+    </div>
+    
+    <script src="../src/number-formatter.js"></script>
+    <script src="../src/calculator-engine.js"></script>
+    <script src="../src/state-manager.js"></script>
+    <script src="../src/memory-manager.js"></script>
+    <script src="../src/expression-parser.js"></script>
+    <script src="../src/calculator-view.js"></script>
+    <script src="../src/calculator-controller.js"></script>
+    <script src="verify-backdrop-filter-fallback.js"></script>
+</body>
+</html>

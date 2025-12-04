@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test: CSS Grid Layout for Buttons</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            padding: 20px;
+            background: var(--gradient-bg);
+        }
+        
+        .test-section {
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .test-section h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .test-info {
+            color: white;
+            margin-bottom: 10px;
+            font-family: var(--font-display);
+        }
+        
+        .grid-overlay {
+            position: relative;
+        }
+        
+        .grid-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.1) 0px,
+                rgba(255, 0, 0, 0.1) 1px,
+                transparent 1px,
+                transparent calc(25% - 1px),
+                rgba(255, 0, 0, 0.1) calc(25% - 1px),
+                rgba(255, 0, 0, 0.1) 25%
+            );
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .test-result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 600;
+        }
+        
+        .test-result.pass {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 2px solid #10b981;
+        }
+        
+        .test-result.fail {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 2px solid #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-section">
+        <h2>Task 18: CSS Grid Layout Test</h2>
+        <div class="test-info">Testing: 4-column grid layout with consistent spacing</div>
+        <div class="test-info">Requirements: 7.4</div>
+    </div>
+
+    <div class="test-section">
+        <h2>Grid Layout Visualization</h2>
+        <div class="test-info">Red lines show 4-column grid divisions (25% each)</div>
+        <div id="calculator-container" class="grid-overlay"></div>
+        <div id="grid-test-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Responsive Grid Tests</h2>
+        <div id="responsive-test-results"></div>
+    </div>
+
+    <script src="../src/number-formatter.js"></script>
+    <script src="../src/calculator-engine.js"></script>
+    <script src="../src/state-manager.js"></script>
+    <script src="../src/memory-manager.js"></script>
+    <script src="../src/expression-parser.js"></script>
+    <script src="../src/calculator-view.js"></script>
+    <script src="../src/calculator-controller.js"></script>
+    <script>
+        // Initialize calculator
+        const view = new CalculatorView('calculator-container');
+        view.render();
+
+        // Test CSS Grid properties
+        function runGridTests() {
+            const results = [];
+            const buttonGrid = document.querySelector('.button-grid');
+            
+            if (!buttonGrid) {
+                results.push({
+                    name: 'Button Grid Exists',
+                    pass: false,
+                    message: 'Button grid element not found'
+                });
+                return results;
+            }
+
+            // Test 1: Grid display property
+            const displayStyle = window.getComputedStyle(buttonGrid).display;
+            results.push({
+                name: 'CSS Grid Display',
+                pass: displayStyle === 'grid',
+                message: `Display property is "${displayStyle}" (expected "grid")`
+            });
+
+            // Test 2: Grid template columns (4 columns)
+            const gridColumns = window.getComputedStyle(buttonGrid).gridTemplateColumns;
+            const columnCount = gridColumns.split(' ').length;
+            results.push({
+                name: '4 Column Grid',
+                pass: columnCount === 4,
+                message: `Grid has ${columnCount} columns (expected 4)`
+            });
+
+            // Test 3: Grid gap consistency
+            const gridGap = window.getComputedStyle(buttonGrid).gap;
+            results.push({
+                name: 'Consistent Gap Spacing',
+                pass: gridGap !== '' && gridGap !== 'normal',
+                message: `Grid gap is "${gridGap}"`
+            });
+
+            // Test 4: Equals button spans 2 columns
+            const equalsButton = document.querySelector('.equals-button');
+            if (equalsButton) {
+                const gridColumnSpan = window.getComputedStyle(equalsButton).gridColumn;
+                const spans2Columns = gridColumnSpan.includes('span 2') || gridColumnSpan.includes('/ span 2');
+                results.push({
+                    name: 'Equals Button Spans 2 Columns',
+                    pass: spans2Columns,
+                    message: `Equals button grid-column is "${gridColumnSpan}"`
+                });
+            } else {
+                results.push({
+                    name: 'Equals Button Spans 2 Columns',
+                    pass: false,
+                    message: 'Equals button not found'
+                });
+            }
+
+            // Test 5: All buttons are in the grid
+            const buttons = buttonGrid.querySelectorAll('.calc-button');
+            results.push({
+                name: 'Buttons in Grid',
+                pass: buttons.length > 0,
+                message: `Found ${buttons.length} buttons in grid`
+            });
+
+            // Test 6: Button rows use display: contents
+            const buttonRows = buttonGrid.querySelectorAll('.button-row');
+            let allRowsUseContents = true;
+            buttonRows.forEach(row => {
+                const display = window.getComputedStyle(row).display;
+                if (display !== 'contents') {
+                    allRowsUseContents = false;
+                }
+            });
+            results.push({
+                name: 'Button Rows Use Display Contents',
+                pass: allRowsUseContents,
+                message: allRowsUseContents ? 
+                    'All button rows use display: contents' : 
+                    'Some button rows do not use display: contents'
+            });
+
+            return results;
+        }
+
+        // Test responsive grid at different breakpoints
+        function runResponsiveTests() {
+            const results = [];
+            const buttonGrid = document.querySelector('.button-grid');
+            const viewportWidth = window.innerWidth;
+
+            // Determine current breakpoint
+            let breakpoint = 'desktop';
+            if (viewportWidth < 640) {
+                breakpoint = 'mobile';
+            } else if (viewportWidth < 1024) {
+                breakpoint = 'tablet';
+            }
+
+            results.push({
+                name: 'Current Breakpoint',
+                pass: true,
+                message: `Viewport: ${viewportWidth}px (${breakpoint})`
+            });
+
+            // Test grid maintains 4 columns at current breakpoint
+            const gridColumns = window.getComputedStyle(buttonGrid).gridTemplateColumns;
+            const columnCount = gridColumns.split(' ').length;
+            results.push({
+                name: `Grid Columns at ${breakpoint}`,
+                pass: columnCount === 4,
+                message: `Grid has ${columnCount} columns at ${viewportWidth}px`
+            });
+
+            // Test buttons remain accessible (minimum size)
+            const buttons = buttonGrid.querySelectorAll('.calc-button');
+            let allButtonsAccessible = true;
+            let minHeight = Infinity;
+            let minWidth = Infinity;
+
+            buttons.forEach(button => {
+                const rect = button.getBoundingClientRect();
+                minHeight = Math.min(minHeight, rect.height);
+                minWidth = Math.min(minWidth, rect.width);
+                if (rect.height < 44 || rect.width < 44) {
+                    allButtonsAccessible = false;
+                }
+            });
+
+            results.push({
+                name: 'Buttons Meet Minimum Size (44x44px)',
+                pass: allButtonsAccessible,
+                message: `Minimum button size: ${Math.round(minWidth)}x${Math.round(minHeight)}px`
+            });
+
+            return results;
+        }
+
+        // Display test results
+        function displayResults(results, containerId) {
+            const container = document.getElementById(containerId);
+            const passCount = results.filter(r => r.pass).length;
+            const totalCount = results.length;
+            
+            let html = `<div class="test-result ${passCount === totalCount ? 'pass' : 'fail'}">`;
+            html += `<strong>Results: ${passCount}/${totalCount} tests passed</strong>`;
+            html += '</div>';
+            
+            html += '<div style="margin-top: 15px;">';
+            results.forEach(result => {
+                const icon = result.pass ? '✓' : '✗';
+                const color = result.pass ? '#10b981' : '#ef4444';
+                html += `<div style="color: white; margin: 8px 0; font-family: var(--font-display);">`;
+                html += `<span style="color: ${color}; font-weight: bold; margin-right: 8px;">${icon}</span>`;
+                html += `<strong>${result.name}:</strong> ${result.message}`;
+                html += '</div>';
+            });
+            html += '</div>';
+            
+            container.innerHTML = html;
+        }
+
+        // Run tests after page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const gridResults = runGridTests();
+                displayResults(gridResults, 'grid-test-results');
+                
+                const responsiveResults = runResponsiveTests();
+                displayResults(responsiveResults, 'responsive-test-results');
+            }, 500);
+        });
+
+        // Re-run responsive tests on window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const responsiveResults = runResponsiveTests();
+                displayResults(responsiveResults, 'responsive-test-results');
+            }, 250);
+        });
+    </script>
+</body>
+</html>

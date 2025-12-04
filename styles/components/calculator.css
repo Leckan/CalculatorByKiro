@@ -43,11 +43,52 @@
     animation: fadeInScale var(--duration-entrance) var(--easing-decelerate);
 }
 
+/* ========================================
+   BACKDROP-FILTER FALLBACKS
+   Task 19: Requirements 8.1, 8.5
+   
+   Provides solid background fallback for browsers that don't support
+   backdrop-filter (primarily older browsers and Firefox on Windows).
+   
+   Strategy:
+   1. Default glass effect with backdrop-filter for modern browsers
+   2. More opaque background for browsers without backdrop-filter support
+   3. Ensures readability in all scenarios
+   4. Maintains visual hierarchy and contrast
+   ======================================== */
+
 /* Fallback for browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(10px)) {
     .calculator {
-        /* Provide a more opaque background as fallback */
-        background: rgba(15, 23, 42, 0.85);
+        /* Provide a more opaque, solid background for readability
+           Uses a darker, more saturated background to ensure text contrast */
+        background: rgba(15, 23, 42, 0.95);
+        
+        /* Enhance border visibility without backdrop blur */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        
+        /* Slightly stronger shadow to compensate for lack of depth from blur */
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    /* Ensure display area remains readable */
+    .display-area {
+        background: rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Additional fallback for -webkit-backdrop-filter (Safari) */
+@supports not (-webkit-backdrop-filter: blur(10px)) and not (backdrop-filter: blur(10px)) {
+    .calculator {
+        /* Same fallback for browsers without any backdrop-filter support */
+        background: rgba(15, 23, 42, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    /* Ensure display area remains readable */
+    .display-area {
+        background: rgba(0, 0, 0, 0.3);
     }
 }
 

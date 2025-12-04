@@ -74,34 +74,52 @@
     box-shadow: var(--shadow-sm);
 }
 
-/* Button grid layout - Requirements 1.4 */
-.button-grid {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-}
+/* ========================================
+   CSS GRID LAYOUT FOR BUTTON ARRANGEMENT
+   Task 18: Requirements 7.4
+   ======================================== */
 
-.button-row {
-    display: flex;
+/* Button grid layout using CSS Grid with 4 columns
+   Requirements: 7.4 */
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--space-3);
     width: 100%;
 }
 
-.button-row .calc-button {
-    flex: 1;
+/* Button rows are no longer needed with CSS Grid, but kept for backwards compatibility */
+.button-row {
+    display: contents; /* Makes children participate in parent grid */
+}
+
+/* All buttons take up 1 column by default */
+.calc-button {
+    grid-column: span 1;
     min-width: 0; /* Allow buttons to shrink below content size */
 }
 
 /* Button spacers for empty grid cells */
 .button-spacer {
-    flex: 1;
+    grid-column: span 1;
     min-width: 0;
 }
 
-/* Ensure consistent spacing in grid - Requirements 1.4 */
-.calc-button + .calc-button {
-    /* Gap is handled by flexbox gap property */
+/* Special button spans - Requirements 7.4 */
+/* Equals button spans 2 columns */
+.equals-button {
+    grid-column: span 2;
 }
+
+/* Zero button can span 2 columns if needed (currently spans 1) */
+/* Uncomment if zero button should span 2 columns:
+.calc-button[data-action="0"] {
+    grid-column: span 2;
+}
+*/
+
+/* Ensure consistent spacing in grid - Requirements 1.4 */
+/* Gap is handled by grid gap property */
 
 /* Focus state for accessibility */
 .calc-button:focus-visible {

@@ -48,13 +48,10 @@
         border-radius: 10px; /* Slightly smaller radius */
     }
     
-    /* Adjust button grid spacing */
+    /* Adjust button grid spacing - Task 18: Requirements 7.4 */
     .button-grid {
         gap: var(--space-2); /* Tighter spacing on mobile */
-    }
-    
-    .button-row {
-        gap: var(--space-2);
+        grid-template-columns: repeat(4, 1fr); /* Maintain 4 columns on mobile */
     }
     
     /* Indicator adjustments */
@@ -111,13 +108,10 @@
         font-size: var(--text-lg); /* 18px - maintain desktop size */
     }
     
-    /* Maintain standard button grid spacing */
+    /* Maintain standard button grid spacing - Task 18: Requirements 7.4 */
     .button-grid {
         gap: var(--space-3);
-    }
-    
-    .button-row {
-        gap: var(--space-3);
+        grid-template-columns: repeat(4, 1fr); /* Maintain 4 columns on tablet */
     }
     
     /* Calculator container sizing */
@@ -169,13 +163,10 @@
         font-size: var(--text-lg); /* 18px */
     }
     
-    /* Standard button grid spacing */
+    /* Standard button grid spacing - Task 18: Requirements 7.4 */
     .button-grid {
         gap: var(--space-3);
-    }
-    
-    .button-row {
-        gap: var(--space-3);
+        grid-template-columns: repeat(4, 1fr); /* Maintain 4 columns on desktop */
     }
     
     /* Calculator container sizing */
@@ -227,10 +218,7 @@
     
     .button-grid {
         gap: var(--space-2);
-    }
-    
-    .button-row {
-        gap: var(--space-2);
+        grid-template-columns: repeat(4, 1fr); /* Maintain 4 columns in landscape */
     }
 }
 
