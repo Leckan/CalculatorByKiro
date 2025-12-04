@@ -111,17 +111,15 @@
 }
 
 /* Special button spans - Requirements 7.4 */
-/* Equals button spans 2 columns */
-.equals-button {
+/* Zero button spans 2 columns for better ergonomics */
+.zero-button {
     grid-column: span 2;
 }
 
-/* Zero button can span 2 columns if needed (currently spans 1) */
-/* Uncomment if zero button should span 2 columns:
-.calc-button[data-action="0"] {
-    grid-column: span 2;
+/* Equals button remains single column for consistency */
+.equals-button {
+    grid-column: span 1;
 }
-*/
 
 /* Ensure consistent spacing in grid - Requirements 1.4 */
 /* Gap is handled by grid gap property */
